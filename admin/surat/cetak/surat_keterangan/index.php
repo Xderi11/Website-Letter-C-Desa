@@ -3,7 +3,7 @@
   	include ('../../../../config/koneksi.php');
 
   	$id = $_GET['id'];
-  	$qCek = mysqli_query($connect,"SELECT penduduk.*, surat_keterangan.* FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.nik = penduduk.nik WHERE surat_keterangan.id_sk='$id'");
+  	$qCek = mysqli_query($connect,"SELECT penduduk.*, surat_keterangan.* FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.id_sk='$id'");
   	while($row = mysqli_fetch_array($qCek)){
 
         $qTampilDesa = mysqli_query($connect, "SELECT * FROM profil_desa WHERE id_profil_desa = '1'");
@@ -34,9 +34,9 @@
 	<table width="100%">
 		<tr><img src="../../../../assets/img/logo-jombang-90x90.png" alt="" class="logo"></tr>
 		<div class="header">
-			<h4 class="kop" style="text-transform: uppercase">PEMERINTAH <?php echo $rows['kota']; ?></h4>
+			<h4 class="kop" style="text-transform: uppercase">PEMERINTAH <?php echo $rows['kabupaten']; ?></h4>
 			<h4 class="kop" style="text-transform: uppercase">KECAMATAN <?php echo $rows['kecamatan']; ?></h4>
-			<h4 class="kop" style="text-transform: uppercase">KEPALA DESA <?php echo $rows['nama_desa']; ?></h4>
+			<h4 class="kop" style="text-transform: uppercase">DESA <?php echo $rows['nama_desa']; ?></h4>
 			<h5 class="kop2" style="text-transform: capitalize;"><?php echo $rows['alamat'] . " Telp. " . $rows['no_telpon'] . " Kode Pos " . $rows['kode_pos']; ?></h5>
 			<div style="text-align: center;">
 				<hr>
@@ -51,7 +51,7 @@
 	<div id="isi3">
 		<table width="100%">
 			<tr>
-				<td class="indentasi">Yang bertanda tangan di bawah ini, <a style="text-transform: capitalize;"><?php echo $rowss['jabatan'] . " " . $rows['nama_desa']; ?>, Kecamatan <?php echo $rows['kecamatan']; ?>, <?php echo $rows['kota']; ?></a>, menerangkan dengan sebenarnya bahwa :
+				<td class="indentasi">Yang bertanda tangan di bawah ini, <a style="text-transform: capitalize;"><?php echo $rowss['jabatan'] . " " . $rows['nama_desa']; ?>, Kecamatan <?php echo $rows['kecamatan']; ?>, <?php echo $rows['kabupaten']; ?></a>, menerangkan dengan sebenarnya bahwa :
 				</td>
 			</tr>
 		</table>
@@ -60,68 +60,58 @@
 			<tr>
 				<td width="30%" class="indentasi">N&nbsp;&nbsp;&nbsp;A&nbsp;&nbsp;&nbsp;M&nbsp;&nbsp;&nbsp;A</td>
 				<td width="2%">:</td>
-				<td width="68%" style="text-transform: uppercase; font-weight: bold;"><?php echo $row['nama']; ?></td>
-			</tr>
-			<tr>
-				<td class="indentasi">Jenis Kelamin</td>
-				<td>:</td>
-				<td><?php echo $row['jenis_kelamin']; ?></td>
+				<td width="68%" style="text-transform: uppercase; font-weight: bold;"><?php echo $row['nama_pemilik']; ?></td>
 			</tr>
 			<?php
-				$tgl_lhr = date($row['tgl_lahir']);
-				$tgl = date('d ', strtotime($tgl_lhr));
-				$bln = date('F', strtotime($tgl_lhr));
-				$thn = date(' Y', strtotime($tgl_lhr));
+				$tanggal = $row['tanggal'];
+				$tgl = date('d', strtotime($tanggal));
+				$bln = date('F', strtotime($tanggal));
+				$thn = date('Y', strtotime($tanggal));
 				$blnIndo = array(
-				    'January' => 'Januari',
-				    'February' => 'Februari',
-				    'March' => 'Maret',
-				    'April' => 'April',
-				    'May' => 'Mei',
-				    'June' => 'Juni',
-				    'July' => 'Juli',
-				    'August' => 'Agustus',
-				    'September' => 'September',
-				    'October' => 'Oktober',
-				    'November' => 'November',
-				    'December' => 'Desember'
+    				'January' => 'Januari',
+    				'February' => 'Februari',
+    				'March' => 'Maret',
+    				'April' => 'April',
+    				'May' => 'Mei',
+    				'June' => 'Juni',
+    				'July' => 'Juli',
+    				'August' => 'Agustus',
+    				'September' => 'September',
+    				'October' => 'Oktober',
+    				'November' => 'November',
+    				'December' => 'Desember'
 				);
 			?>
 			<tr>
-				<td class="indentasi">Tempat/Tgl. Lahir</td>
+				<td class="indentasi">Tanggal</td>
 				<td>:</td>
-				<td><?php echo $row['tempat_lahir'] . ", " . $tgl . $blnIndo[$bln] . $thn; ?></td>
+				<td><?php echo $tgl . " " . $blnIndo[$bln] . " " . $thn; ?></td>
 			</tr>
 			<tr>
-				<td class="indentasi">Agama</td>
+				<td class="indentasi">No Persil</td>
 				<td>:</td>
-				<td><?php echo $row['agama']; ?></td>
-			</tr>
-			<tr>
-				<td class="indentasi">Pekerjaan</td>
-				<td>:</td>
-				<td><?php echo $row['pekerjaan']; ?></td>
-			</tr>
-			<tr>
-				<td class="indentasi">NIK</td>
-				<td>:</td>
-				<td><?php echo $row['nik']; ?></td>
+				<td><?php echo $row['no_persil']; ?></td>
 			</tr>
 			<tr>
 				<td class="indentasi">Alamat</td>
 				<td>:</td>
-				<td><?php echo $row['jalan'] . ", RT" . $row['rt'] . "/RW" . $row['rw'] . ", Dusun " . $row['dusun'] . ", Desa " . $row['desa'] . ", Kecamatan " . $row['kecamatan'] . ", " . $row['kota']; ?></td>
+				<td><?php echo $row['alamat_pemilik'];?></td>
 			</tr>
 			<tr>
-				<td class="indentasi">Kewarganegaraan</td>
+				<td class="indentasi">Kelas Desa</td>
 				<td>:</td>
-				<td style="text-transform: uppercase;"><?php echo $row['kewarganegaraan']; ?></td>
+				<td><?php echo $row['kelas_desa'];?></td>
+			</tr>
+			<tr>
+				<td class="indentasi">Luas Tanah</td>
+				<td>:</td>
+				<td><?php echo $row['luas_milik'];?></td>
 			</tr>
 		</table>
 		<br><br>
 		<table width="100%">
 			<tr>
-				<td class="indentasi">Orang tersebut diatas benar-benar penduduk kami Dusun <a style="text-transform: capitalize;"><?php echo $row['dusun']; ?>, Desa <?php echo $rows['nama_desa']; ?>, Kecamatan <?php echo $rows['kecamatan']; ?>, <?php echo $rows['kota']; ?></a>. Bahwa nama yang bersangkutan tidak berada di rumah dan tidak diketahui keberadaannya.</td>
+				<td class="indentasi">Orang tersebut adalah benar-benar pemilik tanah yang sah atas sebidang tanah yang terletak di <a style="text-transform: capitalize;"> Desa <?php echo $rows['nama_desa']; ?>, Kecamatan <?php echo $rows['kecamatan']; ?>, <?php echo $rows['kabupaten']; ?></a>. </td>
 			</tr>
 		</table><br>
 		<table width="100%">
@@ -131,12 +121,20 @@
 		</table><br>
 		<table width="100%">
 			<tr>
-				<td class="indentasi">Demikian surat keterangan ini dibuat dengan sebenar-benarnya dan digunakan sebagaimana mestinya.</td>
+				<td class="indentasi">Demikian surat keterangan ini dibuat dengan sebenar-benarnya agar yang berkepentingan mengetahui dan untuk dipergunakan sebagaimana mestinya.</td>
 			</tr>
 		</table>
 	</div>
 	<br>
 	<table width="100%" style="text-transform: capitalize;">
+		<tr></tr>
+		<tr></tr>
+		<tr></tr>
+		<tr></tr>
+		<tr></tr>
+		<tr></tr>
+		<tr></tr>
+		<tr></tr>
 		<tr></tr>
 		<tr></tr>
 		<tr></tr>
