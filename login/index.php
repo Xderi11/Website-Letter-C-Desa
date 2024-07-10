@@ -31,7 +31,7 @@
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
 			<div class="card-header text-center mt-4">
-				<h3>Login System</h3>
+				<h3>Desa Tanjung Berlian Barat</h3>
 			</div>
 			<div class="card-body">
 				<form method="post" action="aksi-login.php">

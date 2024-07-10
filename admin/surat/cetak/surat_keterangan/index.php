@@ -16,7 +16,7 @@
 
 <html>
 <head>
-	<link rel="shortcut icon" href="../../../../assets/img/mini-logo.png">
+	<link rel="shortcut icon" href="../../../../assets/img/logo-karimun-mini.png">
 	<title>CETAK SURAT</title>
 	<link href="../../../../assets/formsuratCSS/formsurat.css" rel="stylesheet" type="text/css"/>
 	<style type="text/css" media="print">
@@ -32,7 +32,7 @@
 <body>
 <div>
 	<table width="100%">
-		<tr><img src="../../../../assets/img/logo-jombang-90x90.png" alt="" class="logo"></tr>
+		<tr><img src="../../../../assets/img/logo-surat.png" alt="" class="logo"></tr>
 		<div class="header">
 			<h4 class="kop" style="text-transform: uppercase">PEMERINTAH <?php echo $rows['kabupaten']; ?></h4>
 			<h4 class="kop" style="text-transform: uppercase">KECAMATAN <?php echo $rows['kecamatan']; ?></h4>
@@ -177,9 +177,6 @@
 			<td></td>
 			<td align="center"><?php echo $rowss['jabatan'] . " " . $rows['nama_desa']; ?></td>
 		</tr>
-		<tr></tr>
-		<tr></tr>
-		<tr></tr>
 		<tr></tr>
 		<tr></tr>
 		<tr></tr>

@@ -1,5 +1,5 @@
 html,body{
-background-image: url('../../assets/img/background3.jpg');
+background-image: url('../../assets/img/background-kepri.jpg');
 background-position: center;
 background-repeat: no-repeat;
 background-size: cover;
@@ -19,6 +19,7 @@ margin-top: auto;
 margin-bottom: auto;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
+border-radius: 20px;
 }
 
 .social_icon span{
@@ -44,7 +45,7 @@ top: -45px;
 
 .input-group-prepend span{
 width: 50px;
-background-color: #FFC312;
+background-color: #0052cc;
 color: black;
 border:0 !important;
 }
@@ -69,7 +70,7 @@ margin-right: 5px;
 
 .login_btn{
 color: black;
-background-color: #FFC312;
+background-color: #0052cc;
 width: 100px;
 }
 
