@@ -33,10 +33,10 @@
 	</style>
 	<?php
   	header("Content-type: application/vnd-ms-excel");
-  	header("Content-Disposition: attachment; filename=Data Penduduk Ds. Kedawong.xls");
+  	header("Content-Disposition: attachment; filename=Data Letter C Ds. Tanjung Berlian Barat.xls");
 	?>
 	<center>
-		<h2>Data Penduduk <br/> Desa Kedawong</h2>
+		<h2>Data Letter C <br/> Desa Tanjung Berlian Barat</h2>
 	</center>
 	<table border="1">
     <thead>
