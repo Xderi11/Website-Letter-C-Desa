@@ -17,7 +17,7 @@
 	<title>Login Page</title>   
 	<link rel="stylesheet" href="../assets/fontawesome-5.10.2/css/all.css">
 	<link rel="stylesheet" href="../assets/bootstrap-4.3.1/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../assets/loginCSS/login.css">
+	<link rel="stylesheet" type="text/css" href="login.css">
 </head>
 <body>
 <div class="container">
@@ -54,7 +54,7 @@
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					<span style="font-size:8pt">Copyright &copy; 2019 <a href="../" class="text-decoration-none text-white">e-SuratDesa</a></span>
+					<span style="font-size:8pt">Copyright &copy; 2024 <a href="../" class="text-decoration-none text-white">Letter C</a></span>
 				</div>
 				<div class="d-flex justify-content-center">
 					<span class="text-white" style="font-size:8pt">All rights reserved.</span>
