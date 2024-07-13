@@ -79,7 +79,7 @@
         <table class="table table-striped table-bordered table-responsive" id="data-table" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th><strong>Tanggal</strong></th>
+              <th><strong>Tanggal Penerbitan</strong></th>
               <th><strong>No Persil</strong></th>
               <th><strong>Nama</strong></th>
               <th><strong>Jenis Surat</strong></th>

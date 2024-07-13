@@ -191,7 +191,7 @@
                       );
                     ?>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">Tanggal</label>
+                      <label class="col-sm-3 control-label">Tanggal Penerbitan</label>
                       <div class="col-sm-9">
                       <input type="text" name="ftanggal" style="text-transform: capitalize;" value="<?php echo $row['tanggal'] . ' ' . $blnIndo[$bln] . ' ' . $thn; ?>" class="form-control" readonly>
                       </div>

@@ -80,15 +80,15 @@
           </div>
         </form><br>
       </div>
-        <div class="col-md-12">
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <h3 class="box-title"><i class="fas fa-user-plus"></i> Tambah Data Letter C</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-              </div>
+      <div class="col-md-12">
+        <div class="box box-default">
+          <div class="box-header with-border">
+            <h3 class="box-title"><i class="fas fa-user-plus"></i> Tambah Data Letter C</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
             </div>
+          </div>
           <div class="box-body">
             <div class="row">
               <form class="form-horizontal" method="post" action="simpan-penduduk.php">
@@ -97,20 +97,19 @@
                     <div class="form-group">
                       <label class="col-sm-4 control-label">Nama Pemilik</label>
                       <div class="col-sm-8">
-                        <input type="text" name="fnama_pemilik"  class="form-control" style="text-transform: capitalize;"placeholder="Nama Pemilik" required>
-                       
+                        <input type="text" name="fnama_pemilik"  class="form-control" style="text-transform: capitalize;" placeholder="Nama Pemilik" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-4 control-label">Alamat Pemilik</label>
                       <div class="col-sm-8">
-                        <input type="text" name="falamat_pemilik" class="form-control" style="text-transform: capitalize;" placeholder="alamat Pemilik" required>
+                        <input type="text" name="falamat_pemilik" class="form-control" style="text-transform: capitalize;" placeholder="Alamat Pemilik" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-4 control-label">No Persil</label>
                       <div class="col-sm-8">
-                        <input type="text" name="fno_persil" class="form-control" style="text-transform: capitalize;" placeholder="No Persil" required>                   
+                        <input type="text" name="fno_persil" class="form-control" pattern="\d*" title="Hanya angka yang diperbolehkan" placeholder="No Persil" required>
                       </div>
                     </div>
                     <div class="form-group">
@@ -132,20 +131,21 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-4 control-label">Tanggal</label>
+                      <label class="col-sm-4 control-label">Tanggal Penerbitan</label>
                       <div class="col-sm-8">
                         <input type="date" name="ftanggal" class="form-control" required>
                       </div>
                     </div>
-                    </div>
                     <div class="form-group">
                       <label class="col-sm-4 control-label">Sebab Perubahan</label>
                       <div class="col-sm-8">
-                        <input type="text" name="fsebab_perubahan" class="form-control" style="text-transform: capitalize;" placeholder="sebab perubahan" required>                   
+                        <input type="text" name="fsebab_perubahan" class="form-control" style="text-transform: capitalize;" placeholder="Sebab Perubahan" required>                   
                       </div>
-                  <div class="box-footer pull-right">
-                    <input type="reset" class="btn btn-default" value="Batal">
-                    <input type="submit" name="submit" class="btn btn-info" value="Submit">
+                    </div>
+                    <div class="box-footer pull-right">
+                      <input type="reset" class="btn btn-default" value="Batal">
+                      <input type="submit" name="submit" class="btn btn-info" value="Submit">
+                    </div>
                   </div>
                 </div>
               </form>

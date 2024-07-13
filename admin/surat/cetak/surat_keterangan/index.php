@@ -83,7 +83,7 @@
 				);
 			?>
 			<tr>
-				<td class="indentasi">Tanggal</td>
+				<td class="indentasi">Tanggal Penerbitan</td>
 				<td>:</td>
 				<td><?php echo $tgl . " " . $blnIndo[$bln] . " " . $thn; ?></td>
 			</tr>
