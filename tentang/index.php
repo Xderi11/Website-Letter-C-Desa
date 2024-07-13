@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="../assets/img/mini-logo.png">
-	<title>e-SuratDesa</title>
+	<link rel="shortcut icon" href="../assets/img/logo2.png">
+	<title>LETTER C</title>
 	<link rel="stylesheet" href="../assets/fontawesome-5.10.2/css/all.css">
 	<link rel="stylesheet" href="../assets/bootstrap-4.3.1/dist/css/bootstrap.min.css">
 	<style type="text/css">
@@ -49,6 +49,73 @@
 			padding-top: 100px; /* Menyesuaikan ruang untuk navbar */
 		}
 	</style>
+	 <style>
+        
+        @keyframes float {
+            0% {
+                box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+                transform: translateY(0px);
+            }
+            50% {
+                box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.2);
+                transform: translateY(-20px);
+            }
+            100% {
+                box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+                transform: translateY(0px);
+            }
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            box-sizing: border-box;
+            border: 5px white solid;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.6);
+            transform: translateY(0px);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: auto;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .support-me {
+            display: inline-block;
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            width: 20vw;
+            max-width: 250px;
+            min-width: 200px;
+            z-index: 9;
+        }
+
+        .support-me img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
 	<div class="background-image">
@@ -70,7 +137,7 @@
 						<?php
 							session_start();
 							if(empty($_SESSION['username'])){
-								echo '<a class="btn btn-dark" href="login/"><i class="fas fa-sign-in-alt"></i>&nbsp;LOGIN</a>';
+								echo '<a class="btn btn-dark" href="../login/"><i class="fas fa-sign-in-alt"></i>&nbsp;LOGIN</a>';
 							} else if(isset($_SESSION['lvl'])){
 								echo '<a class="btn btn-transparent text-light" href="admin/"><i class="fa fa-user-cog"></i> '; echo $_SESSION['lvl']; echo '</a>';
 								echo '<a class="btn btn-transparent text-light" href="login/logout.php"><i class="fas fa-power-off"></i></a>';
@@ -96,19 +163,22 @@
 							</p>
 							<br>
 							<p class="card-text">
-								<label style="font-weight: 700;font-size: 25px"><i class="fas fa-shield-alt"></i> </label>
+								<!-- <label style="font-weight: 700;font-size: 25px"><i class="fas fa-shield-alt"></i> </label> -->
 							</p>
 							<hr>
-							<b></b><b>LETTER-C</b>
+							<b></b><b></b>
 						</div>
 						<br><br><br>
-						<div class="row text-center">
-							<div class="col-md-12">
-								<img src="../assets/img/logo1.png" class="img"><br><br>
-								<p class="text-muted"> <b><a href="#" style="text-decoration:none"></a></b></p>
-							</div>
-							<div class="col-md-3"></div>
-						</div>
+					
+						<div class="container">
+	<div class="avatar">
+		<a href="http://localhost/Website-Letter-C-Desa-main/">
+			<img src="../assets/img/logo-tentang.png" alt="Skytsunami" />
+		</a>
+	</div>
+</div>
+
+
 						
 					</div>
 				</div>
@@ -116,9 +186,7 @@
 		</div>
 	</div>
 
-	<div class="footer bg-dark text-center">
-		<span class="text-light"><strong>Copyright &copy; 2024 <a href="../" class="text-decoration-none text-white">LETTER-C</a>.</strong></span>
-	</div>
+
 
 	<!-- Include necessary scripts -->
 	<script src="../assets/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
