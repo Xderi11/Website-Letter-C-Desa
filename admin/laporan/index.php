@@ -216,16 +216,16 @@
           if(isset($_GET['filter']) && ! empty($_GET['filter'])){
             $filter = $_GET['filter'];
             if($filter == '1'){
-              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' ";
+              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, penduduk.no_persil, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' ";
             }else if($filter == '2'){
-              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' AND DATE(surat_keterangan.tanggal_surat)='{$_GET['tanggal']}' ";
+              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, penduduk.no_persil, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' AND DATE(surat_keterangan.tanggal_surat)='{$_GET['tanggal']}' ";
             }else if($filter == '3'){
-              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' AND MONTH(surat_keterangan.tanggal_surat)='{$_GET['bulan']}' AND YEAR(surat_keterangan.tanggal_surat)='{$_GET['tahun']}' ";
+              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, penduduk.no_persil,  surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' AND MONTH(surat_keterangan.tanggal_surat)='{$_GET['bulan']}' AND YEAR(surat_keterangan.tanggal_surat)='{$_GET['tahun']}' ";
             }else if($filter == '4'){
-              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' AND YEAR(surat_keterangan.tanggal_surat)='{$_GET['tahun']}'";
+              $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, penduduk.no_persil, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' AND YEAR(surat_keterangan.tanggal_surat)='{$_GET['tahun']}'";
             }
           }else{
-            $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' ";
+            $query = "SELECT penduduk.nama_pemilik, penduduk.alamat_pemilik, penduduk.no_persil, surat_keterangan.no_surat, surat_keterangan.tanggal_surat, surat_keterangan.jenis_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='selesai' ";
           } 
         ?>
         <table class="table table-striped table-bordered table-responsive" width="100%" cellspacing="0">
@@ -234,6 +234,7 @@
                 <th>No. Surat</th>
                 <th>Tanggal</th>
                 <th>Nama Pemilik</th>
+                <th>No Persil</th>
                 <th>Jenis Surat</th>
                 <th>Alamat Pemilik</th>
             </tr>
@@ -269,6 +270,7 @@
                     ?>
                     <td><?php echo $tgl . $blnIndo[$bln] . $thn; ?></td>
                     <td style="text-transform: capitalize;"><?php echo $data['nama_pemilik']; ?></td>
+                    <td><?php echo $data['no_persil']; ?></td>
                     <td><?php echo $data['jenis_surat']; ?></td>
                     <td><?php echo isset($data['alamat_pemilik']) ? $data['alamat_pemilik'] : 'Alamat tidak tersedia'; ?></td>
                   </tr>
@@ -300,6 +302,8 @@
             })
           })
         </script>
+
+        
       </div>
     </div>
   </section>
