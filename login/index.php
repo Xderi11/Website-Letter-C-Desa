@@ -18,6 +18,19 @@
 	<link rel="stylesheet" href="../assets/fontawesome-5.10.2/css/all.css">
 	<link rel="stylesheet" href="../assets/bootstrap-4.3.1/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="login.css">
+	<style>
+		.center-logo {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 30px; /* Adjust the margin as needed */
+			margin-bottom: -130px; /* Adjust the margin as needed */
+		}
+		.center-logo img {
+			width: 200px; /* Adjust the width as needed */
+			height: auto; /* Maintain aspect ratio */
+		}
+	</style>
 </head>
 <body>
 <div class="container">
@@ -28,10 +41,13 @@
 			}
 		}
 	?>
+	<div class="center-logo">
+		<img src="../assets/img/logo1.png" alt="Logo">
+	</div>
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
-			<div class="card-header text-center mt-4">
-				<h3>Desa Tanjung Berlian Barat</h3>
+			<div class="card-header text-center mt-2">
+				<h3>Silahkan Login</h3>
 			</div>
 			<div class="card-body">
 				<form method="post" action="aksi-login.php">
