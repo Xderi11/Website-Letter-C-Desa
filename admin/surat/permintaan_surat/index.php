@@ -11,7 +11,7 @@
         <?php  
           if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
             echo '<img src="../../../assets/img/ava-admin-female.png" class="img-circle" alt="User Image">';
-          }else if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Kepala Desa')){
+          } else if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Kepala Desa')){
             echo '<img src="../../../assets/img/ava-kades.png" class="img-circle" alt="User Image">';
           }
         ?>
@@ -151,3 +151,31 @@
 <?php 
   include ('../part/footer.php');
 ?>
+
+<!-- Dashboard Box for Permintaan Surat -->
+<div class="col-lg-4 col-xs-6">
+  <div class="small-box bg-green">
+    <div class="inner">
+      <h3>
+        <?php
+          // Query to count pending requests
+          $qTampil = mysqli_query($connect, "SELECT tanggal_surat FROM surat_keterangan WHERE status_surat='pending' ");
+          // Check if the query executed successfully
+          if ($qTampil) {
+            // Count the number of rows in the result set
+            $jumlahPermintaanSurat = mysqli_num_rows($qTampil);
+            echo $jumlahPermintaanSurat;
+          } else {
+            // If query fails, display an error message
+            echo "Error: " . mysqli_error($connect);
+          }
+        ?>
+      </h3>
+      <p>Permintaan Surat</p>
+    </div>
+    <div class="icon">
+      <i class="fas fa-envelope-open-text" style="font-size:70px"></i>
+    </div>
+    <a href="../surat/permintaan_surat/" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+</div>

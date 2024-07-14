@@ -5,18 +5,18 @@
 
 <style>
   .background-image {
-    background-image: url('../../assets/img/background-kepri.jpg'); /* Ganti dengan URL gambar latar belakang Anda */
+    background-image: url('../../assets/img/background-kepri.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh; /* Sesuaikan dengan tinggi minimum halaman */
+    min-height: 100vh;
     width: 100%;
   }
   .content-wrapper, .main-sidebar, .footer {
-    background: transparent; /* Membuat elemen transparan agar background image terlihat */
+    background: transparent;
   }
   .small-box {
-    background: rgba(255, 255, 255, 0.8); /* Menambahkan sedikit transparansi pada kotak kecil */
+    background: rgba(255, 255, 255, 0.8);
   }
 </style>
 
@@ -121,9 +121,17 @@
             <div class="inner">
               <h3>
                 <?php
+                  // Query to count pending requests
                   $qTampil = mysqli_query($connect, "SELECT tanggal_surat FROM surat_keterangan WHERE status_surat='pending' ");
-                  $jumlahPermintaanSurat = mysqli_num_rows($qTampil);
-                  echo $jumlahPermintaanSurat;
+                  // Check if the query executed successfully
+                  if ($qTampil) {
+                    // Count the number of rows in the result set
+                    $jumlahPermintaanSurat = mysqli_num_rows($qTampil);
+                    echo $jumlahPermintaanSurat;
+                  } else {
+                    // If query fails, display an error message
+                    echo "Error: " . mysqli_error($connect);
+                  }
                 ?>
               </h3>
               <p>Permintaan Surat</p>
@@ -172,7 +180,7 @@
                   echo $jumlahPenduduk;
                 ?>
               </h3>
-              <p>Data Penduduk</p>
+              <p>Data Letter C</p>
             </div>
             <div class="icon">
               <i class="fas fa-users" style="font-size:70px"></i>
@@ -186,7 +194,7 @@
             <div class="inner">
               <h3>
                 <?php
-                  $qTampil = mysqli_query($connect, "SELECT * FROM surat_keterangan WHERE status_surat='selesai' UNION SELECT * FROM surat_keterangan_berkelakuan_baik WHERE status_surat='selesai' UNION SELECT * FROM surat_keterangan_domisili WHERE status_surat='selesai' UNION SELECT * FROM surat_keterangan_usaha WHERE status_surat='selesai'");
+                  $qTampil = mysqli_query($connect, "SELECT * FROM surat_keterangan WHERE status_surat='selesai' ");
                   $jumlahPermintaanSurat = mysqli_num_rows($qTampil);
                   echo $jumlahPermintaanSurat;
                 ?>

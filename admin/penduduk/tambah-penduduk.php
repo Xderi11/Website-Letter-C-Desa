@@ -30,7 +30,7 @@
       </li>
       <li class="active">
         <a href="../penduduk/">
-          <i class="fa fa-users"></i><span>&nbsp;Data Penduduk</span>
+          <i class="fa fa-users"></i><span>&nbsp;Data Letter C</span>
         </a>
       </li>
       <li class="treeview">
@@ -65,20 +65,13 @@
     <h1>&nbsp;</h1>
     <ol class="breadcrumb">
       <li><a href="../dashboard/"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
-      <li class="active">Data Penduduk</li>
+      <li class="active">Data Letter C</li>
     </ol>
   </section>
   <section class="content">      
     <div class="row">
       <div class="col-md-12">
-        <form method="post" enctype="multipart/form-data" action="import-penduduk.php">
-          <div class="col-md-3">
-            <input name="datapenduduk" type="file" required="required">
-          </div>
-          <div>
-            <input name="upload" type="submit" class="btn btn-primary" value="Import .XLS">
-          </div>
-        </form><br>
+      <br>
       </div>
       <div class="col-md-12">
         <div class="box box-default">

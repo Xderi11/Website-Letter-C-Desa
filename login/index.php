@@ -30,6 +30,21 @@
 			width: 200px; /* Adjust the width as needed */
 			height: auto; /* Maintain aspect ratio */
 		}
+    .center-text {
+	  font-size : 20pt;
+      text-align: center;
+      font-weight: bold;
+      color: black;
+	  margin-top: 130px;
+    }
+	.center-kabupaten {
+	  font-size : 20pt;
+      text-align: center;
+      font-weight: bold;
+      color: black;
+	  margin-top: 3px;
+	  margin-bottom: -170px;
+    }
 	</style>
 </head>
 <body>
@@ -44,6 +59,12 @@
 	<div class="center-logo">
 		<img src="../assets/img/logo1.png" alt="Logo">
 	</div>
+  <div class="center-text">
+    DESA TANJUNG BERLIAN BARAT
+  </div>
+  <div class="center-kabupaten">
+	KABUPATEN KARIMUN
+  </div>
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
 			<div class="card-header text-center mt-2">
