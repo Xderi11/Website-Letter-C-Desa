@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="../assets/img/mini-logo.png">
-	<title>e-SuratDesa</title>
+	<title>e-Letter C</title>
   	<link rel="stylesheet" href="../assets/fontawesome-5.10.2/css/all.css">
 	<link rel="stylesheet" href="../assets/bootstrap-4.3.1/dist/css/bootstrap.min.css">
 </head>
@@ -31,7 +31,7 @@
 	        		<a class="nav-link" href="#"><i class="fas fa-tasks"></i>&nbsp;CEK SURAT</a>
 	      		</li>
 	      		<li class="nav-item">
-	        		<a class="nav-link" href="../tentang/">TENTANG <b>e-SuratDesa</b></a>
+	        		<a class="nav-link" href="../tentang/">TENTANG <b>e-Letter C</b></a>
 	      		</li>
 	      		<li class="nav-item active ml-5">
 	      			<?php
@@ -111,7 +111,7 @@
 </div>
 
 <div class="footer bg-dark text-center">
-    <span class="text-light"><strong>Copyright &copy; 2019 <a href="../" class="text-decoration-none text-white">e-SuratDesa</a>.</strong> All rights reserved.</span>
+    <span class="text-light"><strong>Copyright &copy; 2024 <a href="../" class="text-decoration-none text-white">e-Letter C</a>.</strong> All rights reserved.</span>
 </div>
 </body>
 </html>
