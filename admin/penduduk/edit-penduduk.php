@@ -114,9 +114,9 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-4 control-label">Luas Milik</label>
+                      <label class="col-sm-4 control-label">Luas Lahan</label>
                       <div class="col-sm-8">
-                        <input type="text" name="fluas_milik" class="form-control" style="text-transform: capitalize;" placeholder="Luas Milik" value="<?php echo $row['luas_milik']; ?>" required>
+                        <input type="text" name="fluas_milik" class="form-control" style="text-transform: capitalize;" placeholder="Luas Lahan" value="<?php echo $row['luas_milik']; ?>" required>
                       </div>
                     </div>
                     <div class="form-group">

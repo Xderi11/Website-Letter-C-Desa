@@ -159,7 +159,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">luas Milik</label>
+                      <label class="col-sm-3 control-label">luas Lahan</label>
                       <div class="col-sm-9">
                         <input type="text" name="fluas_milik" style="text-transform: capitalize;" value="<?php echo $row['luas_milik']; ?>" class="form-control" readonly>
                       </div>

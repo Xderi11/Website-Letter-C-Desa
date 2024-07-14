@@ -63,7 +63,7 @@
 							</div>
 							<div class="col-sm-6">
 							    <div class="form-group">
-						           	<label class="col-sm-12" style="font-weight: 500;">Luas Milik</label>
+						           	<label class="col-sm-12" style="font-weight: 500;">Luas Lahan</label>
 						           	<div class="col-sm-12">
 						               	<input type="text" name="fluas_milik" class="form-control" style="text-transform: capitalize;" value="<?php echo $data['luas_milik']; ?>" readonly>
 						           	</div>
@@ -79,7 +79,7 @@
 							</div>
 							<div class="col-sm-6">
 							    <div class="form-group">
-						           	<label class="col-sm-12" style="font-weight: 500;">Tanggal</label>
+						           	<label class="col-sm-12" style="font-weight: 500;">Tanggal Penerbitan</label>
 						           	<div class="col-sm-12">
 						           		<?php
 											$tanggal = date($data['tanggal']);

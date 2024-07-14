@@ -46,7 +46,7 @@
         <th><strong>Alamat Pemilik</strong></th>
         <th><strong>No Persil</strong></th>
         <th><strong>Kelas Desa</strong></th>
-        <th><strong>Luas Milik</strong></th>
+        <th><strong>Luas Lahan</strong></th>
         <th><strong>Jenis Tanah</strong></th>
         <th><strong>Tanggal</strong></th>
         <th><strong>Sebab Perubahan</strong></th>

@@ -157,9 +157,24 @@
 								<label style="font-weight: 700;font-size: 25px"><i class="fas fa-info-circle"></i> APA ITU Letter C?</label>
 								<hr>
 								<blockquote>
-								Surat tanah letter C adalah sebuah tanda bukti atau identitas kepemilikan tanah oleh seseorang yang berada di desa atau kampung.<b><a href="#" style="text-decoration:none"></a></b> Bentuk surat tradisional ini merupakan bukti kepemilikan tanah yang sudah diberikan secara turun-temurun.
-									<br><br>
+								Letter C Desa adalah dokumen yang menjadi salah satu bagian dari administrasi pertanahan di Indonesia, khususnya yang berkaitan dengan kepemilikan dan penggunaan tanah di wilayah pedesaan. Dokumen ini seringkali juga disebut sebagai Buku C atau Register C.<b><a href="#" style="text-decoration:none"></a></b> Bentuk surat tradisional ini merupakan bukti kepemilikan tanah yang sudah diberikan secara turun-temurun.
+								<br>
+									<br> <strong>1. Definisi Letter C Desa</strong><br>
+									Letter C Desa adalah catatan atau daftar yang mencatat tanah-tanah yang ada di desa, mencakup informasi tentang kepemilikan, luas, penggunaan, dan batas-batas tanah. Letter C ini disimpan oleh pemerintahan desa dan digunakan sebagai dasar untuk berbagai keperluan administrasi pertanahan, seperti pendaftaran tanah, pengalihan hak, penentuan pajak, dan sengketa tanah.<br>
 								</blockquote>
+								
+								<strong>2. Isi dari Letter C Desa</strong><br>
+								Dokumen Letter C Desa biasanya berisi beberapa informasi penting mengenai tanah, di antaranya:<br>
+								<ul>
+									<li><strong>Nama Pemilik:</strong> Nama orang atau badan hukum yang memiliki hak atas tanah tersebut.</li>
+									<li><strong>Alamat Pemilik:</strong> Alamat lengkap dari pemilik tanah.</li>
+									<li><strong>Nomor Persil:</strong> Nomor identifikasi unik yang diberikan kepada setiap bidang tanah.</li>
+									<li><strong>Kelas Desa:</strong> Klasifikasi desa di mana tanah tersebut berada.</li>
+									<li><strong>Luas Lahan:</strong> Ukuran tanah dalam satuan meter persegi (m²) atau hektar (ha).</li>
+									<li><strong>Jenis Tanah:</strong> Jenis atau kategori tanah tersebut, misalnya sawah, tegalan, kebun, dll.</li>
+									<li><strong>Tanggal Penerbitan:</strong> Tanggal dikeluarkannya Letter C untuk tanah tersebut.</li>
+									<li><strong>Sebab Perubahan:</strong> Alasan atau sebab perubahan hak milik atau status tanah, seperti jual beli, hibah, warisan, dll.</li>
+								</ul>
 							</p>
 							<br>
 							<p class="card-text">
@@ -177,16 +192,12 @@
 		</a>
 	</div>
 </div>
-
-
 						
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
 
 	<!-- Include necessary scripts -->
 	<script src="../assets/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
