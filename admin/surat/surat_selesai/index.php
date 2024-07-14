@@ -39,7 +39,6 @@
         </a>
         <ul class="treeview-menu">
           <li>
-          <li>
             <a href="../../surat/buat_surat/">
               <i class="fa fa-circle-notch"></i> Buat Surat
             </a>
@@ -63,6 +62,7 @@
     </ul>
   </section>
 </aside>
+
 <div class="content-wrapper">
   <section class="content-header">
     <h1>Surat Selesai</h1>
@@ -71,6 +71,7 @@
       <li class="active">Surat Selesai</li>
     </ol>
   </section>
+
   <section class="content">      
     <div class="row">
       <div class="col-md-12">
@@ -78,9 +79,10 @@
         <table class="table table-striped table-bordered table-responsive" id="data-table" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th><strong>No.</strong></th>
               <th><strong>Tanggal Penerbitan</strong></th>
               <th><strong>No. Surat</strong></th>
-              <th><strong>No Persil</strong></th>
+              <th><strong>No. Persil</strong></th>
               <th><strong>Nama</strong></th>
               <th><strong>Jenis Surat</strong></th>
               <th><strong>Status</strong></th>
@@ -96,6 +98,7 @@
               foreach($qTampil as $row){
             ?>
             <tr>
+              <td><?php echo $no++; ?></td>
               <?php
                 $tgl_lhr = date($row['tanggal_surat']);
                 $tgl = date('d ', strtotime($tgl_lhr));

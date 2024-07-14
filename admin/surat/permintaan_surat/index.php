@@ -64,6 +64,7 @@
     </ul>
   </section>
 </aside>
+
 <div class="content-wrapper">
   <section class="content-header">
     <h1>Permintaan Surat</h1>
@@ -72,6 +73,7 @@
       <li class="active">Permintaan Surat</li>
     </ol>
   </section>
+
   <section class="content">      
     <div class="row">
       <div class="col-md-12">
@@ -79,6 +81,7 @@
         <table class="table table-striped table-bordered table-responsive" id="data-table" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th><strong>No.</strong></th>
               <th><strong>Tanggal Penerbitan</strong></th>
               <th><strong>No Persil</strong></th>
               <th><strong>Nama</strong></th>
@@ -90,48 +93,53 @@
           <tbody>
             <?php
               $qTampil = mysqli_query($connect, "SELECT penduduk.nama_pemilik, surat_keterangan.id_sk, surat_keterangan.no_surat, surat_keterangan.no_persil, surat_keterangan.jenis_surat, surat_keterangan.status_surat, surat_keterangan.tanggal_surat FROM penduduk LEFT JOIN surat_keterangan ON surat_keterangan.no_persil = penduduk.no_persil WHERE surat_keterangan.status_surat='pending'");
-                if ($qTampil->num_rows > 0){
-                  foreach ($qTampil as $row){ 
+              if ($qTampil->num_rows > 0){
+                $nomor = 1; // Inisialisasi nomor urut
+                foreach ($qTampil as $row){ 
             ?>
-                    <tr>
-                      <?php
-                        $tgl_lhr = date($row['tanggal_surat']);
-                        $tgl = date('d ', strtotime($tgl_lhr));
-                        $bln = date('F', strtotime($tgl_lhr));
-                        $thn = date(' Y', strtotime($tgl_lhr));
-                        $blnIndo = array(
-                            'January' => 'Januari',
-                            'February' => 'Februari',
-                            'March' => 'Maret',
-                            'April' => 'April',
-                            'May' => 'Mei',
-                            'June' => 'Juni',
-                            'July' => 'Juli',
-                            'August' => 'Agustus',
-                            'September' => 'September',
-                            'October' => 'Oktober',
-                            'November' => 'November',
-                            'December' => 'Desember'
-                        );
-                      ?>
-                      <td><?php echo $tgl . $blnIndo[$bln] . $thn; ?></td>
-                      <td><?php echo $row['no_persil']; ?></td>
-                      <td style="text-transform: capitalize;"><?php echo $row['nama_pemilik']; ?></td>
-                      <td><?php echo $row['jenis_surat']; ?></td>
-                      <td><a class="btn btn-danger btn-sm" href='#'><i class="fa fa-spinner"></i><b> <?php echo $row['status_surat']; ?></b></a></td>
-                      <td>
-                        <?php  
-                          if($row['jenis_surat']=="Surat Keterangan"){
-                        ?>
-                        <a class="btn btn-success btn-sm" href='konfirmasi/surat_keterangan/index.php?id=<?php echo $row['id_sk']; ?>'><i class="fa fa-check"></i><b> KONFIRMASI</b></a>
-                        <?php
-                          }
-                        ?>
-                      </td>
-                    </tr>
+                <tr>
+                  <td><?php echo $nomor++; ?></td>
+                  <?php
+                    $tgl_lhr = date($row['tanggal_surat']);
+                    $tgl = date('d ', strtotime($tgl_lhr));
+                    $bln = date('F', strtotime($tgl_lhr));
+                    $thn = date(' Y', strtotime($tgl_lhr));
+                    $blnIndo = array(
+                        'January' => 'Januari',
+                        'February' => 'Februari',
+                        'March' => 'Maret',
+                        'April' => 'April',
+                        'May' => 'Mei',
+                        'June' => 'Juni',
+                        'July' => 'Juli',
+                        'August' => 'Agustus',
+                        'September' => 'September',
+                        'October' => 'Oktober',
+                        'November' => 'November',
+                        'December' => 'Desember'
+                    );
+                  ?>
+                  <td><?php echo $tgl . $blnIndo[$bln] . $thn; ?></td>
+                  <td><?php echo $row['no_persil']; ?></td>
+                  <td style="text-transform: capitalize;"><?php echo $row['nama_pemilik']; ?></td>
+                  <td><?php echo $row['jenis_surat']; ?></td>
+                  <td><a class="btn btn-danger btn-sm" href='#'><i class="fa fa-spinner"></i><b> <?php echo $row['status_surat']; ?></b></a></td>
+                  <td>
+                    <?php  
+                      if($row['jenis_surat']=="Surat Keterangan"){
+                    ?>
+                    <a class="btn btn-success btn-sm" href='konfirmasi/surat_keterangan/index.php?id=<?php echo $row['id_sk']; ?>'><i class="fa fa-check"></i><b> KONFIRMASI</b></a>
+                    <?php
+                      }
+                    ?>
+                  </td>
+                </tr>
             <?php 
-                  } 
-                }
+                } 
+              } else {
+                // Handle jika tidak ada data yang ditemukan
+                echo '<tr><td colspan="7">Tidak ada data yang ditemukan</td></tr>';
+              }
             ?>
           </tbody>
         </table>
