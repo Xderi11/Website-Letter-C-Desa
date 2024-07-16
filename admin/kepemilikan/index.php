@@ -27,7 +27,7 @@
             <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
           </a>
         </li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
             <span class="pull-right-container">
@@ -38,12 +38,12 @@
             <li>
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
-            <li class="active">
+            <li>
               <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
             </li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="active treeview">
             <a href="#">
               <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
               <span class="pull-right-container">
@@ -51,7 +51,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li>
+              <li class="active">
                 <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
               </li>
               <li>

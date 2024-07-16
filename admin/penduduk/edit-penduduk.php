@@ -9,8 +9,95 @@ $row = mysqli_fetch_assoc($qCek);
 ?>
 
 <aside class="main-sidebar">
-  <!-- Sidebar content -->
-</aside>
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <?php  
+            if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
+              echo '<img src="../../assets/img/ava-admin-female.png" class="img-circle" alt="User Image">';
+            } else if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Kepala Desa')){
+              echo '<img src="../../assets/img/ava-kades.png" class="img-circle" alt="User Image">';
+            }
+          ?>
+        </div>
+        <div class="pull-left info">
+          <p><?php echo $_SESSION['lvl']; ?></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li>
+          <a href="../dashboard/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
+          </a>
+        </li>
+        <li class="active treeview">
+          <a href="#">
+            <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
+            </li>
+            <li class="active">
+              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+              <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+              </li>
+              <li>
+                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
+              </li>
+            </ul>
+        </li>
+          
+        <?php
+          if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
+        ?>
+        <li class="treeview">
+          <a href="#">
+            <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Surat</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="../surat/buat_surat/"><i class="fa fa-circle-notch"></i> Buat Surat</a>
+            </li>
+            <li>
+              <a href="../surat/permintaan_surat/"><i class="fa fa-circle-notch"></i> Permintaan Surat</a>
+            </li>
+            <li>
+              <a href="../surat/surat_selesai/"><i class="fa fa-circle-notch"></i> Surat Selesai</a>
+            </li>
+          </ul>
+        </li>
+        <?php 
+          }
+        ?>
+        <li>
+          <a href="../laporan/"><i class="fas fa-chart-line"></i> <span>&nbsp;&nbsp;Laporan</span></a>
+        </li>
+      </ul>
+    </section>
+  </aside>
+
+
 <div class="content-wrapper">
   <section class="content-header">
     <h1>&nbsp;</h1>
@@ -39,7 +126,7 @@ $row = mysqli_fetch_assoc($qCek);
                     <div class="form-group">
                       <label class="col-sm-4 control-label">Nama Pemilik</label>
                       <div class="col-sm-8">
-                        <input type="text" name="fnama_pemilik"  class="form-control" style="text-transform: capitalize;" placeholder="Nama Pemilik" value="<?php echo $row['nama_pemilik']; ?>" required>
+                        <input type="text" name="fnama_pemilik" class="form-control" style="text-transform: capitalize;" placeholder="Nama Pemilik" value="<?php echo $row['nama_pemilik']; ?>" required>
                       </div>
                     </div>
                     <div class="form-group">
@@ -49,51 +136,52 @@ $row = mysqli_fetch_assoc($qCek);
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-4 control-label">No Persil</label>
-                      <div class="col-sm-8">
-                        <input type="number" name="fno_persil" class="form-control" placeholder="No Persil" value="<?php echo $row['no_persil']; ?>" required>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label">Kelas Desa</label>
-                      <div class="col-sm-8">
-                        <input type="text" name="fkelas_desa" class="form-control" style="text-transform: capitalize;" placeholder="Kelas Desa" value="<?php echo $row['kelas_desa']; ?>" required>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label">Luas Lahan</label>
-                      <div class="col-sm-8">
-                        <input type="text" name="fluas_milik" class="form-control" style="text-transform: capitalize;" placeholder="Luas Lahan" value="<?php echo $row['luas_milik']; ?>" required>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label">Jenis Tanah</label>
-                      <div class="col-sm-8">
-                        <input type="text" name="fjenis_tanah" class="form-control" style="text-transform: capitalize;" placeholder="Jenis Tanah" value="<?php echo $row['jenis_tanah']; ?>" required>
-                      </div>
-                    </div>
-                    <div class="form-group">
                       <label class="col-sm-4 control-label">Tanggal Penerbitan</label>
                       <div class="col-sm-8">
                         <input type="date" name="ftanggal" class="form-control" value="<?php echo $row['tanggal']; ?>" required>
                       </div>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label">Pajak Bumi</label>
-                    <div class="col-sm-8">
-                      <input type="text" name="fpajak_bumi" class="form-control" style="text-transform: capitalize;" placeholder="Pajak Bumi" value="<?php echo $row['pajak_bumi']; ?>" required>
+                    <!-- Tambahkan kolom lain yang tidak bisa diubah sebagai teks biasa -->
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">No Persil</label>
+                      <div class="col-sm-8">
+                        <p class="form-control-static"><?php echo $row['no_persil']; ?></p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label">Keterangan Tanah</label>
-                    <div class="col-sm-8">
-                      <input type="text" name="fketerangan_tanah" class="form-control" style="text-transform: capitalize;" placeholder="Keterangan Tanah" value="<?php echo $row['keterangan_tanah']; ?>" required>
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">Kelas Desa</label>
+                      <div class="col-sm-8">
+                        <p class="form-control-static"><?php echo $row['kelas_desa']; ?></p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">Luas Lahan</label>
+                      <div class="col-sm-8">
+                        <p class="form-control-static"><?php echo $row['luas_milik']; ?></p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">Jenis Tanah</label>
+                      <div class="col-sm-8">
+                        <p class="form-control-static"><?php echo $row['jenis_tanah']; ?></p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">Pajak Bumi</label>
+                      <div class="col-sm-8">
+                        <p class="form-control-static"><?php echo $row['pajak_bumi']; ?></p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">Keterangan Tanah</label>
+                      <div class="col-sm-8">
+                        <p class="form-control-static"><?php echo $row['keterangan_tanah']; ?></p>
+                      </div>
                     </div>
                   </div>
                   <div class="box-footer pull-right">
-                    <input type="reset" class="btn btn-default" value="Batal">
-                    <input type="submit" name="submit" class="btn btn-info" value="Submit">
+                    <a href="../penduduk/" class="btn btn-default">Batal</a>
+                    <button type="submit" name="submit" class="btn btn-info">Submit</button>
                   </div>
                 </div>
               </form>

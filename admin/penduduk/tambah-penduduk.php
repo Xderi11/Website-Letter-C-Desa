@@ -14,12 +14,18 @@ if(isset($_POST['submit'])) {
     $keterangan_tanah = $_POST['fketerangan_tanah'];
 
     // Cek apakah no persil sudah ada di data tanah
-    $query_check_tanah = "SELECT * FROM tanah WHERE no_persil = '$no_persil'";
-    $result_check_tanah = mysqli_query($connect, $query_check_tanah);
+    $query_check_tanah = "SELECT * FROM tanah WHERE no_persil = ?";
+    $stmt_check_tanah = $connect->prepare($query_check_tanah);
+    $stmt_check_tanah->bind_param("s", $no_persil);
+    $stmt_check_tanah->execute();
+    $result_check_tanah = $stmt_check_tanah->get_result();
 
     // Cek apakah no persil sudah ada di data kepemilikan_letter_c
-    $query_check_letter_c = "SELECT * FROM kepemilikan_letter_c WHERE no_persil = '$no_persil'";
-    $result_check_letter_c = mysqli_query($connect, $query_check_letter_c);
+    $query_check_letter_c = "SELECT * FROM kepemilikan_letter_c WHERE no_persil = ?";
+    $stmt_check_letter_c = $connect->prepare($query_check_letter_c);
+    $stmt_check_letter_c->bind_param("s", $no_persil);
+    $stmt_check_letter_c->execute();
+    $result_check_letter_c = $stmt_check_letter_c->get_result();
 
     if (mysqli_num_rows($result_check_tanah) > 0 || mysqli_num_rows($result_check_letter_c) > 0) {
         // Nomor persil sudah ada, tampilkan pesan error dan redirect kembali ke form
@@ -31,18 +37,17 @@ if(isset($_POST['submit'])) {
         // Siapkan query untuk memasukkan data baru ke kepemilikan_letter_c
         $query_insert = "
             INSERT INTO kepemilikan_letter_c (nama_pemilik, alamat_pemilik, no_persil, kelas_desa, luas_milik, jenis_tanah, tanggal, pajak_bumi, keterangan_tanah)
-            VALUES ('$nama_pemilik', '$alamat_pemilik', '$no_persil', '$kelas_desa', '$luas_milik', '$jenis_tanah', '$tanggal', '$pajak_bumi', '$keterangan_tanah')
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ";
+        $stmt_insert = $connect->prepare($query_insert);
+        $stmt_insert->bind_param("sssssssss", $nama_pemilik, $alamat_pemilik, $no_persil, $kelas_desa, $luas_milik, $jenis_tanah, $tanggal, $pajak_bumi, $keterangan_tanah);
 
-        // Eksekusi query untuk memasukkan data
-        $result_insert = mysqli_query($connect, $query_insert);
-
-        if ($result_insert) {
+        if ($stmt_insert->execute()) {
             $_SESSION['success_message'] = "Data Letter C berhasil ditambahkan.";
             header("Location: index.php");
             exit;
         } else {
-            $_SESSION['error_message'] = "Gagal menambahkan data Letter C: " . mysqli_error($connect); // Debug error MySQL
+            $_SESSION['error_message'] = "Gagal menambahkan data Letter C. Silakan coba lagi.";
             header("Location: tambah-penduduk.php");
             exit;
         }
@@ -146,6 +151,17 @@ include ('../part/header.php');
     <section class="content">      
         <div class="row">
             <div class="col-md-12">
+            <?php
+                if(isset($_SESSION['error_message'])) {
+                    echo "<div class='alert alert-danger'>".$_SESSION['error_message']."</div>";
+                    unset($_SESSION['error_message']);
+                }
+
+                if(isset($_SESSION['success_message'])) {
+                    echo "<div class='alert alert-success'>".$_SESSION['success_message']."</div>";
+                    unset($_SESSION['success_message']);
+                }
+                ?>
                 <br>
             </div>
             <div class="col-md-12">
