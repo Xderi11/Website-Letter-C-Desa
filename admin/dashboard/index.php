@@ -45,11 +45,39 @@
             <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
           </a>
         </li>
-        <li>
-          <a href="../penduduk/">
-            <i class="fa fa-users"></i> <span>Data Letter C</span>
+        <li class="treeview">
+          <a href="#">
+            <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
           </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
+            </li>
+            <li>
+              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+            </li>
+          </ul>
         </li>
+        <li class="treeview">
+            <a href="#">
+              <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+              </li>
+              <li>
+                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
+              </li>
+            </ul>
+        </li>
+          
         <?php
           if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
         ?>
@@ -102,9 +130,9 @@
                 <?php
                   include ('../../config/koneksi.php');
 
-                  $qTampil = mysqli_query($connect, "SELECT * FROM penduduk");
-                  $jumlahPenduduk = mysqli_num_rows($qTampil);
-                  echo $jumlahPenduduk;
+                  $qTampil = mysqli_query($connect, "SELECT * FROM kepemilikan_letter_c");
+                  $jumlahKepemilikan_letter_c = mysqli_num_rows($qTampil);
+                  echo $jumlahKepemilikan_letter_c;
                 ?>
               </h3>
               <p>Data Letter C</p>

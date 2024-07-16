@@ -3,7 +3,6 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2019 at 10:09 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
@@ -17,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_e-suratdesa`
+-- Database: `letterc_database`
 --
 
 -- --------------------------------------------------------
@@ -82,34 +81,106 @@ CREATE TABLE `pejabat_desa` (
 
 INSERT INTO `pejabat_desa` (`id_pejabat_desa`, `nama_pejabat_desa`, `jabatan`) VALUES
 (1, 'Tribowo', 'Kepala Desa'),
-(2, 'Yoyok Andrianto', 'Kepala Seksi Pemerintahan');
+(2, 'Yoyok Andrianto', 'Kasi Pemerintahan');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penduduk`
+-- Table structure for table `tanah`
+--
+CREATE TABLE tanah (
+    `id_tanah` int(11) NOT NULL,
+    `no_persil` varchar(11) NOT NULL,
+    `kelas_desa` varchar(100) NOT NULL,
+    `luas_milik` varchar(150) NOT NULL,
+    `jenis_tanah` varchar(150) NOT NULL,
+    `pajak_bumi` varchar(100) NOT NULL,
+    `keterangan_tanah` varchar(255) NOT NULL,
+    PRIMARY KEY (`id_tanah`),
+    UNIQUE KEY `uk_no_persil` (`no_persil`) -- Pastikan ada indeks unik di kolom no_persil
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+-- --------------------------------------------------------
+
+
+--
+-- Table structure for table `kepemilikan_letter_c`
 --
 
-CREATE TABLE `penduduk` (
-  `id_penduduk` int(11) NOT NULL,
+CREATE TABLE kepemilikan_letter_c (
+    `id_kepemilikan` int(11) NOT NULL,
+    `nama_pemilik` varchar(100) NOT NULL,
+    `alamat_pemilik` varchar(50) NOT NULL,
+    `no_persil` varchar(11) NOT NULL,
+    `kelas_desa` varchar(100) NOT NULL,
+    `luas_milik` varchar(150) NOT NULL,
+    `jenis_tanah` varchar(150) NOT NULL,
+    `tanggal` date NOT NULL,
+    `pajak_bumi` varchar(100) NOT NULL,
+    `keterangan_tanah` varchar(255) NOT NULL,
+    PRIMARY KEY (`id_kepemilikan`),
+    CONSTRAINT `fk_no_persil_tanah` FOREIGN KEY (`no_persil`) REFERENCES `tanah`(`no_persil`) 
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+
+--
+-- Table structure for table `perubahan`
+--
+
+CREATE TABLE `perubahan` (
+  `id_perubahan` int(11) NOT NULL AUTO_INCREMENT,
+  `id_kepemilikan` int(11) NOT NULL,
+  `no_persil` varchar(11) NOT NULL,
   `nama_pemilik` varchar(100) NOT NULL,
   `alamat_pemilik` varchar(50) NOT NULL,
-  `no_persil` varchar(50) NOT NULL,
   `kelas_desa` varchar(10) NOT NULL,
   `luas_milik` varchar(15) NOT NULL,
   `jenis_tanah` varchar(15) NOT NULL,
   `tanggal` date NOT NULL,
-  `sebab_perubahan` varchar(15) NOT NULL
+  `pajak_bumi` varchar(100) NOT NULL,
+  `sebab_perubahan` varchar(50) NOT NULL,
+  `keterangan_tanah` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_perubahan`),
+  CONSTRAINT `fk_id_kepemilikan_perubahan` FOREIGN KEY (`id_kepemilikan`) REFERENCES `kepemilikan_letter_c`(`id_kepemilikan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
+
 --
--- Dumping data for table `penduduk`
+-- Table structure for table `riawayat_perubahan`
 --
 
-INSERT INTO `penduduk` (`id_penduduk`, `nama_pemilik`, `alamat_pemilik`, `no_persil`, `kelas_desa`, `luas_milik`, `jenis_tanah`, `tanggal`, `sebab_perubahan`) VALUES
-(1, 'deri', 'Kundur Utara', '123', 'D-1', '10 HA', 'Gambut', '2024-11-12', '-');
+CREATE TABLE `riwayat_perubahan` (
+  `id_riwayat` int(11) NOT NULL,
+  `id_kepemilikan` int(11) NOT NULL,
+  `no_persil` varchar(11) NOT NULL,
+  `nama_pemilik` varchar(100) NOT NULL,
+  `alamat_pemilik` varchar(50) NOT NULL,
+  `tanggal_perubahan` date NOT NULL,
+  `kelas_desa` varchar(10) NOT NULL,
+  `luas_milik` varchar(15) NOT NULL,
+  `jenis_tanah` varchar(15) NOT NULL,
+  `tanggal` date NOT NULL,
+  `pajak_bumi` varchar(100) NOT NULL,
+  `sebab_perubahan` varchar(50) NOT NULL,
+  `keterangan_tanah` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_riwayat`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+
+
+
 
 --
 -- Table structure for table `profil_desa`
@@ -155,9 +226,7 @@ CREATE TABLE `surat_keterangan` (
 -- Dumping data for table `surat_keterangan`
 --
 
-INSERT INTO `surat_keterangan` (`id_sk`, `jenis_surat`, `no_surat`, `no_persil`, `keperluan`, `tanggal_surat`, `id_pejabat_desa`, `status_surat`, `id_profil_desa`) VALUES
-(1, 'Surat Keterangan', '1', '123', 'surat keterangan', '2024-06-07 04:00:59', 1, 'SELESAI', 1),
-(2, 'Surat Keterangan', NULL, NULL, 'surat keterangan', '2024-07-06 04:01:06', NULL, 'PENDING', 1);
+
 
 
 -- --------------------------------------------------------
@@ -185,12 +254,6 @@ ALTER TABLE `login`
 ALTER TABLE `pejabat_desa`
   ADD PRIMARY KEY (`id_pejabat_desa`);
 
---
--- Indexes for table `penduduk`
---
-ALTER TABLE `penduduk`
-  ADD PRIMARY KEY (`no_persil`),
-  ADD KEY `idx_id_penduduk` (`id_penduduk`);
 
 --
 -- Indexes for table `profil_desa`
@@ -206,6 +269,7 @@ ALTER TABLE `surat_keterangan`
   ADD KEY `idx_no_persil` (`no_persil`),
   ADD KEY `idx_id_pejabat_desa` (`id_pejabat_desa`),
   ADD KEY `idx_id_profil_desa` (`id_profil_desa`);
+
 
 
 
@@ -228,11 +292,31 @@ ALTER TABLE `login`
 --
 ALTER TABLE `pejabat_desa`
   MODIFY `id_pejabat_desa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `penduduk`
+-- AUTO_INCREMENT for table `kepemilikan_letter_c`
 --
-ALTER TABLE `penduduk`
-  MODIFY `id_penduduk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+ALTER TABLE `kepemilikan_letter_c`
+  MODIFY `id_kepemilikan` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT=3,
+  ADD INDEX `idx_id_kepemilikan` (`id_kepemilikan`);
+
+
+
+ALTER TABLE `tanah`
+  MODIFY `id_tanah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+
+
+ALTER TABLE `perubahan`
+  MODIFY `id_perubahan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  
+
+
+ALTER TABLE `riwayat_perubahan`
+  MODIFY `id_riwayat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+
 --
 -- AUTO_INCREMENT for table `profil_desa`
 --
@@ -254,7 +338,7 @@ ALTER TABLE `surat_keterangan`
 ALTER TABLE `surat_keterangan`
   ADD CONSTRAINT `fk_id_pejabat_desa_sk` FOREIGN KEY (`id_pejabat_desa`) REFERENCES `pejabat_desa` (`id_pejabat_desa`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_id_profil_desa_sk` FOREIGN KEY (`id_profil_desa`) REFERENCES `profil_desa` (`id_profil_desa`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_no_persil_sk` FOREIGN KEY (`no_persil`) REFERENCES `penduduk` (`no_persil`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_no_persil_sk` FOREIGN KEY (`no_persil`) REFERENCES `kepemilikan_letter_c` (`no_persil`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 
 

@@ -2,7 +2,7 @@
 	include ('../../config/koneksi.php');
 
 	$id		= $_GET['id'];
-	$qHapus		= mysqli_query($connect, "DELETE FROM kepemilikan_letter_c WHERE id_kepemilikan = '$id'");
+	$qHapus		= mysqli_query($connect, "DELETE FROM tanah WHERE id_tanah = '$id'");
 
 	if($qHapus){
 		header('location:index.php');
