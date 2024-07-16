@@ -130,6 +130,22 @@ CREATE TABLE kepemilikan_letter_c (
 
 
 
+CREATE TABLE pemilik (
+    `id_pemilik` int(11) NOT NULL,
+    `id_kepemilikan` int(11) NOT NULL,
+    `nama_pemilik` varchar(100) NOT NULL,
+    `alamat_pemilik` varchar(50) NOT NULL,
+    `no_persil` varchar(11) NOT NULL,
+    `tanggal` date NOT NULL,
+    `keterangan_tanah` varchar(255) NOT NULL,
+    `tanggal_perubahan` date NOT NULL,
+    `sebab_perubahan` varchar(255) NOT NULL,
+    `status_kepemilikan` varchar(255) NOT NULL,
+    PRIMARY KEY (`id_pemilik`),
+    CONSTRAINT `fk_id_kepemilikan` FOREIGN KEY (`id_kepemilikan`) REFERENCES `kepemilikan_letter_c`(`id_kepemilikan`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 
@@ -301,6 +317,9 @@ ALTER TABLE `kepemilikan_letter_c`
   AUTO_INCREMENT=3,
   ADD INDEX `idx_id_kepemilikan` (`id_kepemilikan`);
 
+
+ALTER TABLE `pemilik`
+  MODIFY `id_pemilik` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 
 ALTER TABLE `tanah`

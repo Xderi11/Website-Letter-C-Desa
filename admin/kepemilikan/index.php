@@ -94,7 +94,7 @@
 
 <div class="content-wrapper">
   <section class="content-header">
-    <h1>Data Letter C</h1>
+    <h1>Data Kepemilikan Letter C</h1>
     <ol class="breadcrumb">
       <li><a href="../dashboard/"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
       <li class="active">Data Letter C</li>
@@ -120,7 +120,7 @@
         <?php 
           if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
         ?>
-        <a class="btn btn-success btn-md" href='tambah-penduduk.php'><i class="fa fa-user-plus"></i> Tambah Data Letter C</a>
+        <a class="btn btn-success btn-md" href='tambah-kepemilikan.php'><i class="fa fa-user-plus"></i> Tambah Data Kepemilikan</a>
         <a target="_blank" class="btn btn-info btn-md" href='export-letter-c.php'><i class="fas fa-file-export"></i> Export .XLS</a>
         <?php 
           }
@@ -133,14 +133,12 @@
             <tr>
               <th><strong>No</strong></th>
               <th><strong>Nama Pemilik</strong></th>
-              <th><strong>Alamat Pemilik</strong></th>
               <th><strong>No Persil</strong></th>
-              <th><strong>Kelas Desa</strong></th>
-              <th><strong>Luas Milik</strong></th>
-              <th><strong>Jenis Tanah</strong></th>
               <th><strong>Tanggal Penerbitan</strong></th>
-              <th><strong>Pajak Bumi</strong></th>
               <th><strong>Keterangan Tanah</strong></th>
+              <th><strong>Tanggal Perubahan</strong></th>
+              <th><strong>Sebab Perubahan</strong></th>
+              <th><strong>Status Kepemilikan</strong></th>
               <?php 
                 if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
               ?>
@@ -155,7 +153,9 @@
 include ('../../config/koneksi.php');
 
 $no = 1;
-$query = "SELECT * FROM kepemilikan_letter_c";
+$query = "SELECT k.*, p.tanggal_perubahan, p.sebab_perubahan, p.status_kepemilikan 
+          FROM kepemilikan_letter_c k
+          LEFT JOIN pemilik p ON k.id_kepemilikan = p.id_kepemilikan";
 $result = mysqli_query($connect, $query);
 
 if (mysqli_num_rows($result) > 0) {
@@ -163,31 +163,26 @@ if (mysqli_num_rows($result) > 0) {
     echo "<tr>";
     echo "<td>" . $no++ . "</td>";
     echo "<td>" . $row['nama_pemilik'] . "</td>";
-    echo "<td>" . $row['alamat_pemilik'] . "</td>";
     echo "<td>" . $row['no_persil'] . "</td>";
-    echo "<td>" . $row['kelas_desa'] . "</td>";
-    echo "<td>" . $row['luas_milik'] . "</td>";
-    echo "<td>" . $row['jenis_tanah'] . "</td>";
     echo "<td>" . date('d F Y', strtotime($row['tanggal'])) . "</td>";
-    
-    // Format nilai pajak bumi sebelum ditampilkan
-    $pajak_bumi_display = number_format($row['pajak_bumi'], 0, ',', '.');
-    echo "<td>Rp. " . $pajak_bumi_display . "</td>";
     
     // Tampilkan keterangan tanah
     echo "<td>" . $row['keterangan_tanah'] . "</td>";
+    echo "<td>" . $row['tanggal_perubahan'] . "</td>";
+    echo "<td>" . $row['sebab_perubahan'] . "</td>";
+    echo "<td>" . $row['status_kepemilikan'] . "</td>";
     
     // Aksi admin jika sesuai level
     if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
       echo "<td>";
-      echo "<a class='btn btn-success btn-sm' href='edit-penduduk.php?id=" . $row['id_kepemilikan'] . "'><i class='fa fa-edit'></i></a>";
-      echo "<a class='btn btn-danger btn-sm' href='hapus-penduduk.php?id=" . $row['id_kepemilikan'] . "' onclick=\"return confirm('Apakah Anda yakin ingin menghapus data ini?')\"><i class='fa fa-trash'></i></a>";
+      echo "<a class='btn btn-success btn-sm' href='edit-kepemilikan.php?id=" . $row['id_kepemilikan'] . "'><i class='fa fa-edit'></i></a>";
+      echo "<a class='btn btn-danger btn-sm' href='hapus-kepemilikan.php?id=" . $row['id_kepemilikan'] . "' onclick=\"return confirm('Apakah Anda yakin ingin menghapus data ini?')\"><i class='fa fa-trash'></i></a>";
       echo "</td>";
     }
     echo "</tr>";
   }
 } else {
-  echo "<tr><td colspan='10'>Tidak ada data</td></tr>";
+  echo "<tr><td colspan='9'>Tidak ada data</td></tr>";
 }
 
 mysqli_close($connect);
