@@ -3,59 +3,40 @@ session_start();
 include ('../../config/koneksi.php');
 
 if(isset($_POST['submit'])) {
-    $nama_pemilik = $_POST['fnama_pemilik'];
-    $alamat_pemilik = $_POST['falamat_pemilik'];
-    $no_persil = $_POST['fno_persil'];
-    $kelas_desa = $_POST['fkelas_desa'];
-    $luas_milik = $_POST['fluas_milik'];
-    $jenis_tanah = $_POST['fjenis_tanah'];
-    $tanggal = $_POST['ftanggal'];
-    $pajak_bumi = str_replace('.', '', $_POST['fpajak_bumi']); // Menghapus titik sebagai pemisah ribuan
-    $keterangan_tanah = $_POST['fketerangan_tanah'];
+    $nama_pemilik = $_POST['fnama_pemilik'] ?? '';
+    $alamat_pemilik = $_POST['falamat_pemilik'] ?? '';
+    $no_persil = $_POST['fno_persil'] ?? '';
+    $kelas_desa = $_POST['fkelas_desa'] ?? '';
+    $luas_milik = $_POST['fluas_milik'] ?? '';
+    $jenis_tanah = $_POST['fjenis_tanah'] ?? '';
+    $tanggal = $_POST['ftanggal'] ?? '';
+    $pajak_bumi = str_replace('.', '', $_POST['fpajak_bumi']) ?? ''; // Menghapus titik sebagai pemisah ribuan
+    $keterangan_tanah = $_POST['fketerangan_tanah'] ?? '';
+    $id_kepemilikan = $_POST['fid_kepemilikan'] ?? ''; // Ambil id_kepemilikan dari form atau sesuai dengan logika aplikasi
 
-    // Cek apakah no persil sudah ada di data tanah
-    $query_check_tanah = "SELECT * FROM tanah WHERE no_persil = ?";
-    $stmt_check_tanah = $connect->prepare($query_check_tanah);
-    $stmt_check_tanah->bind_param("s", $no_persil);
-    $stmt_check_tanah->execute();
-    $result_check_tanah = $stmt_check_tanah->get_result();
+    // Siapkan query untuk memasukkan data baru ke pemilik
+    $query_insert_pemilik = "
+        INSERT INTO pemilik (nama_pemilik, alamat_pemilik, no_persil, tanggal, keterangan_tanah, sebab_perubahan, status_kepemilikan, id_kepemilikan)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ";
 
-    // Cek apakah no persil sudah ada di data kepemilikan_letter_c
-    $query_check_letter_c = "SELECT * FROM kepemilikan_letter_c WHERE no_persil = ?";
-    $stmt_check_letter_c = $connect->prepare($query_check_letter_c);
-    $stmt_check_letter_c->bind_param("s", $no_persil);
-    $stmt_check_letter_c->execute();
-    $result_check_letter_c = $stmt_check_letter_c->get_result();
+    $stmt_insert_pemilik = $connect->prepare($query_insert_pemilik);
+    $stmt_insert_pemilik->bind_param("ssssssss", $nama_pemilik, $alamat_pemilik, $no_persil, $tanggal, $keterangan_tanah, $sebab_perubahan, $status_kepemilikan, $id_kepemilikan);
 
-    if (mysqli_num_rows($result_check_tanah) > 0 || mysqli_num_rows($result_check_letter_c) > 0) {
-        // Nomor persil sudah ada, tampilkan pesan error dan redirect kembali ke form
-        $_SESSION['error_message'] = "Nomor persil '$no_persil' sudah ada dalam database.";
-        header("Location: tambah-penduduk.php");
+    if ($stmt_insert_pemilik->execute()) {
+        $_SESSION['success_message'] = "Data Letter C berhasil ditambahkan.";
+        header("Location: index.php");
         exit;
     } else {
-        // Nomor persil belum ada, lanjutkan proses penyimpanan ke kepemilikan_letter_c
-        // Siapkan query untuk memasukkan data baru ke kepemilikan_letter_c
-        $query_insert = "
-            INSERT INTO kepemilikan_letter_c (nama_pemilik, alamat_pemilik, no_persil, kelas_desa, luas_milik, jenis_tanah, tanggal, pajak_bumi, keterangan_tanah)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ";
-        $stmt_insert = $connect->prepare($query_insert);
-        $stmt_insert->bind_param("sssssssss", $nama_pemilik, $alamat_pemilik, $no_persil, $kelas_desa, $luas_milik, $jenis_tanah, $tanggal, $pajak_bumi, $keterangan_tanah);
-
-        if ($stmt_insert->execute()) {
-            $_SESSION['success_message'] = "Data Letter C berhasil ditambahkan.";
-            header("Location: index.php");
-            exit;
-        } else {
-            $_SESSION['error_message'] = "Gagal menambahkan data Letter C. Silakan coba lagi.";
-            header("Location: tambah-penduduk.php");
-            exit;
-        }
+        $_SESSION['error_message'] = "Gagal menambahkan data Letter C: " . $stmt_insert_pemilik->error;
+        header("Location: tambah-penduduk.php");
+        exit;
     }
 }
 
 mysqli_close($connect);
 ?>
+
 
 
 

@@ -130,17 +130,17 @@
                 <?php
                   include ('../../config/koneksi.php');
 
-                  $qTampil = mysqli_query($connect, "SELECT * FROM kepemilikan_letter_c");
-                  $jumlahKepemilikan_letter_c = mysqli_num_rows($qTampil);
-                  echo $jumlahKepemilikan_letter_c;
+                  $qTampil = mysqli_query($connect, "SELECT * FROM tanah");
+                  $jumlahTanah = mysqli_num_rows($qTampil);
+                  echo $jumlahTanah;
                 ?>
               </h3>
-              <p>Data Letter C</p>
+              <p>Data Tanah</p>
             </div>
             <div class="icon">
               <i class="fas fa-users" style="font-size:70px"></i>
             </div>
-            <a href="../penduduk/" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="../data-tanah/" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 

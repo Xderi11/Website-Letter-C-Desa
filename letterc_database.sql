@@ -138,14 +138,16 @@ CREATE TABLE pemilik (
     `no_persil` varchar(11) NOT NULL,
     `tanggal` date NOT NULL,
     `keterangan_tanah` varchar(255) NOT NULL,
-    `tanggal_perubahan` date NOT NULL,
-    `sebab_perubahan` varchar(255) NOT NULL,
-    `status_kepemilikan` varchar(255) NOT NULL,
+    `tanggal_perubahan` date NULL,  -- Ubah menjadi NULL
+    `sebab_perubahan` varchar(255) NULL,  -- Ubah menjadi NULL
+    `status_kepemilikan` varchar(255) NULL,  -- Ubah menjadi NULL
     PRIMARY KEY (`id_pemilik`),
     CONSTRAINT `fk_id_kepemilikan` FOREIGN KEY (`id_kepemilikan`) REFERENCES `kepemilikan_letter_c`(`id_kepemilikan`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 
 
 
@@ -164,6 +166,7 @@ CREATE TABLE `perubahan` (
   `jenis_tanah` varchar(15) NOT NULL,
   `tanggal` date NOT NULL,
   `pajak_bumi` varchar(100) NOT NULL,
+  `tanggal_perubahan` date NOT NULL,
   `sebab_perubahan` varchar(50) NOT NULL,
   `keterangan_tanah` varchar(255) NOT NULL,
   PRIMARY KEY (`id_perubahan`),
@@ -191,6 +194,7 @@ CREATE TABLE `riwayat_perubahan` (
   `pajak_bumi` varchar(100) NOT NULL,
   `sebab_perubahan` varchar(50) NOT NULL,
   `keterangan_tanah` varchar(255) NOT NULL,
+
   PRIMARY KEY (`id_riwayat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
