@@ -158,7 +158,7 @@
                       </div>
                     </div>
                     <div class="box-footer pull-right">
-                      <input type="reset" class="btn btn-default" value="Batal">
+                      <input type="button" class="btn btn-default" value="Batal" onclick="window.location.href='index.php';">
                       <input type="submit" name="submit" class="btn btn-info" value="Submit">
                     </div>
                   </div>

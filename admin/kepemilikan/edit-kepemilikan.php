@@ -8,8 +8,13 @@ include('../../config/koneksi.php');
 // Inisialisasi variabel
 $id_kepemilikan = "";
 $nama_pemilik = "";
+$alamat_pemilik = "";
 $no_persil = "";
+$kelas_desa = "";
+$luas_milik = "";
+$jenis_tanah = "";
 $tanggal = "";
+$pajak_bumi = "";
 $keterangan_tanah = "";
 $tanggal_perubahan = "";
 $sebab_perubahan = "";
@@ -19,8 +24,9 @@ $status_kepemilikan = "";
 if(isset($_GET['no_persil'])){
     $no_persil = $_GET['no_persil'];
     
-    // Query untuk mengambil data dari tabel pemilik berdasarkan no_persil
-    $query = "SELECT k.id_kepemilikan, k.nama_pemilik, k.no_persil, k.tanggal, k.keterangan_tanah, p.tanggal_perubahan, p.sebab_perubahan, p.status_kepemilikan 
+    // Query untuk mengambil data dari tabel kepemilikan_letter_c dan pemilik berdasarkan no_persil
+    $query = "SELECT k.id_kepemilikan, k.nama_pemilik, k.alamat_pemilik, k.no_persil, k.kelas_desa, k.luas_milik, k.jenis_tanah, k.tanggal, k.pajak_bumi, k.keterangan_tanah, 
+              p.tanggal_perubahan, p.sebab_perubahan, p.status_kepemilikan 
               FROM kepemilikan_letter_c k
               LEFT JOIN pemilik p ON k.id_kepemilikan = p.id_kepemilikan
               WHERE k.no_persil = '$no_persil'";
@@ -30,8 +36,13 @@ if(isset($_GET['no_persil'])){
         $data = mysqli_fetch_assoc($result);
         $id_kepemilikan = $data['id_kepemilikan'];
         $nama_pemilik = $data['nama_pemilik'];
+        $alamat_pemilik = $data['alamat_pemilik'];
         $no_persil = $data['no_persil'];
+        $kelas_desa = $data['kelas_desa'];
+        $luas_milik = $data['luas_milik'];
+        $jenis_tanah = $data['jenis_tanah'];
         $tanggal = $data['tanggal'];
+        $pajak_bumi = $data['pajak_bumi'];
         $keterangan_tanah = $data['keterangan_tanah'];
         $tanggal_perubahan = $data['tanggal_perubahan'];
         $sebab_perubahan = $data['sebab_perubahan'];
@@ -47,22 +58,58 @@ if(isset($_POST['submit'])){
     $sebab_perubahan = $_POST['sebab_perubahan'];
     $status_kepemilikan = $_POST['status_kepemilikan'];
 
-    // Query untuk mengupdate data pemilik
-    $query_update = "UPDATE pemilik SET tanggal_perubahan='$tanggal_perubahan', sebab_perubahan='$sebab_perubahan', status_kepemilikan='$status_kepemilikan' 
-                     WHERE id_kepemilikan='$id_kepemilikan'";
-    $result_update = mysqli_query($connect, $query_update);
-    
-    if($result_update){
-        header("Location: index.php?pesan=berhasil-mengedit");
-        exit();
+    // Mulai transaksi
+    mysqli_begin_transaction($connect);
+
+    // Query untuk memasukkan data ke tabel perubahan
+    $query_insert_perubahan = "INSERT INTO perubahan (id_kepemilikan, tanggal_perubahan, sebab_perubahan, status_kepemilikan) 
+                               VALUES ('$id_kepemilikan', '$tanggal_perubahan', '$sebab_perubahan', '$status_kepemilikan')";
+    $result_insert_perubahan = mysqli_query($connect, $query_insert_perubahan);
+
+    if($result_insert_perubahan){
+        if($status_kepemilikan == 'Aktif'){
+            // Query untuk mengupdate data pemilik jika status kepemilikan aktif
+            $query_update_pemilik = "UPDATE pemilik SET tanggal_perubahan='$tanggal_perubahan', sebab_perubahan='$sebab_perubahan', status_kepemilikan='$status_kepemilikan' 
+                                     WHERE id_kepemilikan='$id_kepemilikan'";
+            $result_update_pemilik = mysqli_query($connect, $query_update_pemilik);
+            
+            if($result_update_pemilik){
+                // Commit transaksi
+                mysqli_commit($connect);
+                header("Location: index.php?pesan=berhasil-mengedit");
+                exit();
+            } else {
+                // Rollback transaksi jika ada error
+                mysqli_rollback($connect);
+                $error_message = "Gagal mengupdate data.";
+            }
+        } else if($status_kepemilikan == 'Tidak Aktif'){
+            // Query untuk menghapus data pemilik jika status kepemilikan tidak aktif
+            $query_delete_pemilik = "DELETE FROM pemilik WHERE id_kepemilikan='$id_kepemilikan'";
+            $result_delete_pemilik = mysqli_query($connect, $query_delete_pemilik);
+            
+            if($result_delete_pemilik){
+                // Commit transaksi
+                mysqli_commit($connect);
+                header("Location: index.php?pesan=berhasil-mengedit");
+                exit();
+            } else {
+                // Rollback transaksi jika ada error
+                mysqli_rollback($connect);
+                $error_message = "Gagal menghapus data.";
+            }
+        }
     } else {
-        $error_message = "Gagal mengupdate data.";
+        // Rollback transaksi jika ada error
+        mysqli_rollback($connect);
+        $error_message = "Gagal memasukkan data ke tabel perubahan.";
     }
 }
 
 // Tutup koneksi database
 mysqli_close($connect);
 ?>
+
 
 <aside class="main-sidebar">
     <section class="sidebar">
@@ -183,63 +230,83 @@ mysqli_close($connect);
                 </div>
 
                 <!-- Form untuk mengedit data -->
-                <form action="edit-kepemilikan.php?no_persil=<?php echo $no_persil; ?>" method="POST" class="form-horizontal">
-                    <div class="form-group">
-                        <label for="nama_pemilik" class="col-sm-2 control-label">Nama Pemilik:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" value="<?php echo $nama_pemilik; ?>" readonly>
+                <form action="" method="POST">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Informasi Kepemilikan</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="nama_pemilik">Nama Pemilik</label>
+                                <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" value="<?php echo $nama_pemilik; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="alamat_pemilik">Alamat Pemilik</label>
+                                <input type="text" class="form-control" id="alamat_pemilik" name="alamat_pemilik" value="<?php echo $alamat_pemilik; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="alamat_pemilik">No Persil</label>
+                                <input type="text" class="form-control" id="no persil" name="no_persil" value="<?php echo $no_persil; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="kelas_desa">Kelas Desa</label>
+                                <input type="text" class="form-control" id="kelas_desa" name="kelas_desa" value="<?php echo $kelas_desa; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="luas_milik">Luas Milik</label>
+                                <input type="text" class="form-control" id="luas_milik" name="luas_milik" value="<?php echo $luas_milik; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="jenis_tanah">Jenis Tanah</label>
+                                <input type="text" class="form-control" id="jenis_tanah" name="jenis_tanah" value="<?php echo $jenis_tanah; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal</label>
+                                <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo $tanggal; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pajak_bumi">Pajak Bumi</label>
+                                <input type="text" class="form-control" id="pajak_bumi" name="pajak_bumi" value="<?php echo $pajak_bumi; ?>" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pajak_bumi">Keterangan Tanah</label>
+                                <input type="text" class="form-control" id="keterangan_tanah" name="keterangan_tanah" value="<?php echo $keterangan_tanah; ?>" disabled>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="no_persil" class="col-sm-2 control-label">No Persil:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="no_persil" name="no_persil" value="<?php echo $no_persil; ?>" readonly>
+
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Perubahan Data Kepemilikan</h3>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal" class="col-sm-2 control-label">Tanggal:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('d F Y', strtotime($tanggal)); ?>" readonly>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="tanggal_perubahan">Tanggal Perubahan</label>
+                                <input type="date" class="form-control" id="tanggal_perubahan" name="tanggal_perubahan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sebab_perubahan">Sebab Perubahan</label>
+                                <input type="text" class="form-control" id="sebab_perubahan" name="sebab_perubahan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="status_kepemilikan" class="col-sm-2 control-label">Status Kepemilikan:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="status_kepemilikan" name="status_kepemilikan" required>
+                                        <option value="Aktif" <?php echo ($status_kepemilikan == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
+                                        <option value="Tidak Aktif" <?php echo ($status_kepemilikan == 'Tidak Aktif') ? 'selected' : ''; ?>>Tidak Aktif</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="keterangan_tanah" class="col-sm-2 control-label">Keterangan Tanah:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="keterangan_tanah" name="keterangan_tanah" value="<?php echo $keterangan_tanah; ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="tanggal_perubahan" class="col-sm-2 control-label">Tanggal Perubahan:</label>
-                        <div class="col-sm-10">
-                            <input type="date" class="form-control" id="tanggal_perubahan" name="tanggal_perubahan" value="<?php echo $tanggal_perubahan; ?>" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="sebab_perubahan" class="col-sm-2 control-label">Sebab Perubahan:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="sebab_perubahan" name="sebab_perubahan" value="<?php echo $sebab_perubahan; ?>" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="status_kepemilikan" class="col-sm-2 control-label">Status Kepemilikan:</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" id="status_kepemilikan" name="status_kepemilikan" required>
-                                <option value="aktif" <?php if($status_kepemilikan == 'aktif') echo 'selected'; ?>>Aktif</option>
-                                <option value="tidak aktif" <?php if($status_kepemilikan == 'tidak aktif') echo 'selected'; ?>>Tidak Aktif</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" name="submit" class="btn btn-primary">Update Data</button>
+                        <div class="box-footer">
+                            <button type="submit" name="submit" class="btn btn-primary">Simpan Perubahan</button>
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </section>
 </div>
 
-<?php 
-include ('../part/footer.php');
-?>
+<?php include ('../part/footer.php'); ?>

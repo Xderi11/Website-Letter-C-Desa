@@ -8,7 +8,16 @@ mysqli_begin_transaction($connect);
 
 $error = false;
 
-// Hapus data dari tabel pemilik terlebih dahulu
+// Hapus data dari tabel perubahan terlebih dahulu
+$query_delete_perubahan = "DELETE FROM perubahan WHERE id_kepemilikan = ?";
+$stmt_delete_perubahan = $connect->prepare($query_delete_perubahan);
+$stmt_delete_perubahan->bind_param("i", $id);
+
+if (!$stmt_delete_perubahan->execute()) {
+    $error = true;
+}
+
+// Hapus data dari tabel pemilik
 $query_delete_pemilik = "DELETE FROM pemilik WHERE id_kepemilikan = ?";
 $stmt_delete_pemilik = $connect->prepare($query_delete_pemilik);
 $stmt_delete_pemilik->bind_param("i", $id);

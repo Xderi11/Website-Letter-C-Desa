@@ -169,6 +169,7 @@ CREATE TABLE `perubahan` (
   `tanggal_perubahan` date NOT NULL,
   `sebab_perubahan` varchar(50) NOT NULL,
   `keterangan_tanah` varchar(255) NOT NULL,
+  `status_kepemilikan` varchar(255) NULL,
   PRIMARY KEY (`id_perubahan`),
   CONSTRAINT `fk_id_kepemilikan_perubahan` FOREIGN KEY (`id_kepemilikan`) REFERENCES `kepemilikan_letter_c`(`id_kepemilikan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
