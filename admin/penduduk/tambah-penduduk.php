@@ -106,29 +106,23 @@ include ('../part/header.php');
         ?>
         <li class="treeview">
           <a href="#">
-            <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Surat</span>
+            <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Laporan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="../surat/buat_surat/"><i class="fa fa-circle-notch"></i> Buat Surat</a>
+              <a href="../surat/buat_surat/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>
             <li>
-              <a href="../surat/permintaan_surat/"><i class="fa fa-circle-notch"></i> Permintaan Surat</a>
-            </li>
-            <li>
-              <a href="../surat/surat_selesai/"><i class="fa fa-circle-notch"></i> Surat Selesai</a>
+              <a href="../surat/permintaan_surat/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
             </li>
           </ul>
         </li>
         <?php 
           }
         ?>
-        <li>
-          <a href="../laporan/"><i class="fas fa-chart-line"></i> <span>&nbsp;&nbsp;Laporan</span></a>
-        </li>
       </ul>
     </section>
   </aside>

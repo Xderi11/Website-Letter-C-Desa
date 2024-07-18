@@ -83,29 +83,23 @@
         ?>
         <li class="treeview">
           <a href="#">
-            <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Surat</span>
+            <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Laporan</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="../surat/buat_surat/"><i class="fa fa-circle-notch"></i> Buat Surat</a>
+              <a href="../surat/buat_surat/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>
             <li>
-              <a href="../surat/permintaan_surat/"><i class="fa fa-circle-notch"></i> Permintaan Surat</a>
-            </li>
-            <li>
-              <a href="../surat/surat_selesai/"><i class="fa fa-circle-notch"></i> Surat Selesai</a>
+              <a href="../surat/permintaan_surat/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
             </li>
           </ul>
         </li>
         <?php 
           }
         ?>
-        <li>
-          <a href="../laporan/"><i class="fas fa-chart-line"></i> <span>&nbsp;&nbsp;Laporan</span></a>
-        </li>
       </ul>
     </section>
   </aside>
@@ -150,24 +144,24 @@
               <h3>
                 <?php
                   // Query to count pending requests
-                  $qTampil = mysqli_query($connect, "SELECT tanggal_surat FROM surat_keterangan WHERE status_surat='pending' ");
+                  $qTampil = mysqli_query($connect, "SELECT * FROM pemilik");
                   // Check if the query executed successfully
                   if ($qTampil) {
                     // Count the number of rows in the result set
-                    $jumlahPermintaanSurat = mysqli_num_rows($qTampil);
-                    echo $jumlahPermintaanSurat;
+                    $jumlahPemilik = mysqli_num_rows($qTampil);
+                    echo $jumlahPemilik;
                   } else {
                     // If query fails, display an error message
                     echo "Error: " . mysqli_error($connect);
                   }
                 ?>
               </h3>
-              <p>Permintaan Surat</p>
+              <p>Pemilik Tanah Aktif</p>
             </div>
             <div class="icon">
               <i class="fas fa-envelope-open-text" style="font-size:70px"></i>
             </div>
-            <a href="../surat/permintaan_surat/" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="../kepemilikan/" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
