@@ -4,6 +4,7 @@ include ('../part/header.php');
 
 // Koneksi ke database
 include('../../config/koneksi.php');
+$selected_id_pejabat_desa = 2;
 
 // Periksa apakah ada parameter detail yang dikirimkan melalui URL
 if (isset($_GET['detail'])) {
@@ -18,9 +19,11 @@ if (isset($_GET['detail'])) {
         p.keterangan_tanah, 
         p.sebab_perubahan, 
         p.status_kepemilikan,  
-        IFNULL(p.luas_milik, pu.luas_milik) AS luas_milik,
-        IFNULL(p.jenis_tanah, pu.jenis_tanah) AS jenis_tanah,
-        IFNULL(p.tanggal, pu.tanggal) AS tanggal
+        pu.luas_milik AS luas_milik, 
+        pu.kelas_desa AS kelas_desa,
+        pu.jenis_tanah AS jenis_tanah,
+        pu.pajak_bumi AS pajak_bumi,
+        pu.tanggal AS tanggal
     FROM pemilik p
     LEFT JOIN perubahan pu ON p.no_persil = pu.no_persil
     WHERE p.no_persil = '$no_persil' AND (p.status_kepemilikan = 'Aktif' OR pu.status_kepemilikan = 'Aktif')
@@ -51,6 +54,83 @@ if (isset($_GET['detail'])) {
             'December' => 'Desember'
         );
 ?>
+
+<aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+        <div class="pull-left image">
+          <?php  
+            if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
+              echo '<img src="../../assets/img/ava-admin-female.png" class="img-circle" alt="User Image">';
+            } else if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Kepala Desa')){
+              echo '<img src="../../assets/img/ava-kades.png" class="img-circle" alt="User Image">';
+            }
+          ?>
+        </div>
+        <div class="pull-left info">
+          <p><?php echo $_SESSION['lvl']; ?></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li>
+          <a href="../dashboard/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
+            </li>
+            <li>
+              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+              <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+              </li>
+              <li>
+                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
+              </li>
+            </ul>
+        </li>
+        <li class="active treeview">
+          <a href="#">
+            <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Laporan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li >
+              <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
+            </li>
+            <li class="active">
+              <a href="../surat-keterangan/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+</aside>
+
 <div class="content-wrapper">
   <section class="content-header">
     <h1>&nbsp;</h1>
@@ -78,20 +158,27 @@ if (isset($_GET['detail'])) {
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Tanda Tangan</label>
                       <div class="col-sm-9">
-                        <select name="ft_tangan" class="form-control" style="text-transform: uppercase;" required>
-                          <option value="">-- Pilih Tanda Tangan --</option>
-                          <?php
-                            $qTampilPejabat = "SELECT * FROM pejabat_desa";
-                            $tampilPejabat = mysqli_query($connect, $qTampilPejabat);
-                            while ($rows = mysqli_fetch_assoc($tampilPejabat)) {
-                          ?>
-                          <option value="<?php echo $rows['id_pejabat_desa']; ?>" <?php if ($rows['id_pejabat_desa'] == $row['id_pejabat_desa']) echo 'selected="selected"'; ?>>
-                            <?php echo $rows['jabatan'] . " (" . $rows['nama_pejabat_desa'] . ")"; ?>
-                          </option>
-                          <?php 
-                            } 
-                          ?>
-                        </select>
+                      <select name="ft_tangan" class="form-control" style="text-transform: uppercase;" required>
+                        <option value="">-- Pilih Tanda Tangan --</option>
+                        <?php
+                        $qTampilPejabat = "SELECT * FROM pejabat_desa";
+                        $tampilPejabat = mysqli_query($connect, $qTampilPejabat);
+
+                        while ($pejabatRow = mysqli_fetch_assoc($tampilPejabat)) {
+                        ?>
+                        <option value="<?php echo $pejabatRow['id_pejabat_desa'];?>" <?php if ($pejabatRow['id_pejabat_desa'] == $selected_id_pejabat_desa) echo 'selected="selected"';?>>
+                            <?php echo $pejabatRow['jabatan']. " (". $pejabatRow['nama_pejabat_desa']. ")";?>
+                        </option>
+                        <?php 
+                        } 
+                        ?>
+                      </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">No. Surat</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="fno_surat" value="<?php echo !empty($_POST['fno_surat']) ? $_POST['fno_surat'] : ''; ?>" class="form-control" placeholder="Masukkan No. Surat" required>
                       </div>
                     </div>
                   </div>
@@ -99,9 +186,9 @@ if (isset($_GET['detail'])) {
                 <div class="col-md-6">
                   <div class="box-body">
                     <div class="form-group">
-                      <label class="col-sm-3 control-label">No. Surat</label>
+                      <label class="col-sm-3 control-label">Keperluan</label>
                       <div class="col-sm-9">
-                        <input type="text" name="fno_surat" value="<?php echo $row['no_surat']; ?>" class="form-control" placeholder="Masukkan No. Surat" required>
+                        <input type="text" name="fkeperluan" class="form-control" placeholder="Masukkan Keperluan" required>
                       </div>
                     </div>
                   </div>
@@ -155,6 +242,16 @@ if (isset($_GET['detail'])) {
                       </div>
                     </div>
                     <div class="form-group">
+                      <label class="col-sm-3 control-label">Status Tanah</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="fketerangan_tanah" style="text-transform: capitalize;" value="<?php echo $row['keterangan_tanah']; ?>" class="form-control" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="box-body">
+                    <div class="form-group">
                       <label class="col-sm-3 control-label">Sebab Perubahan</label>
                       <div class="col-sm-9">
                         <input type="text" name="fsebab_perubahan" style="text-transform: capitalize;" value="<?php echo $row['sebab_perubahan']; ?>" class="form-control" readonly>
@@ -166,17 +263,19 @@ if (isset($_GET['detail'])) {
                         <input type="text" name="fpajak_bumi" style="text-transform: capitalize;" value="<?php echo $row['pajak_bumi']; ?>" class="form-control" readonly>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Status Kepemilikan</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="fstatus_kepemilikan" style="text-transform: capitalize;" value="<?php echo $row['status_kepemilikan']; ?>" class="form-control" readonly>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="box-body pull-right">
-                    <input type="submit" name="submit" class="btn btn-success" value="Konfirmasi">
-                  </div>
-                </div>
+              <div class="box-footer">
+                <button type="submit" name="update" class="btn btn-info pull-right"><i class="fas fa-check"></i> Konfirmasi</button>
+                <a href="index.php" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
               </div>
-              <input type="hidden" name="id" value="<?php echo $row['no_persil']; ?>">
             </form>
           </div>
         </div>
@@ -184,12 +283,14 @@ if (isset($_GET['detail'])) {
     </div>
   </section>
 </div>
-<?php
+<?php 
     } else {
-        echo "Data tidak ditemukan.";
+        echo "<script>alert('Data tidak ditemukan.');</script>";
+        echo "<meta http-equiv='refresh' content='0; url=index.php?page=index'>";
     }
 } else {
-    echo "Nomor Persil tidak ditentukan.";
+    echo "<script>alert('Nomor persil tidak disediakan.');</script>";
+    echo "<meta http-equiv='refresh' content='0; url=index.php?page=index'>";
 }
+include ('../part/footer.php');
 ?>
-

@@ -217,14 +217,13 @@ CREATE TABLE `surat_keterangan` (
   `jenis_tanah` varchar(15) NOT NULL,
   `tanggal` DATE NOT NULL,
   `keperluan` varchar(50) NOT NULL,
+  `sebab_perubahan` varchar(50) NOT NULL,
+  `status_kepemilikan` varchar(255) NULL,
+  `keterangan_tanah` varchar(255) NOT NULL,
   `tanggal_surat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_pejabat_desa` int(11) DEFAULT NULL,
   `id_profil_desa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `surat_keterangan`
---
 
 
 

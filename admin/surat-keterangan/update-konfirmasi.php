@@ -1,62 +1,37 @@
 <?php
-// Include koneksi database
-include('../../config/koneksi.php');
+include ('../../config/koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data dari form
-    $no_surat = mysqli_real_escape_string($connect, $_POST['fno_surat']);
-    $nama_pemilik = mysqli_real_escape_string($connect, $_POST['fnama_pemilik']);
-    $alamat_pemilik = mysqli_real_escape_string($connect, $_POST['falamat_pemilik']);
-    $no_persil = mysqli_real_escape_string($connect, $_POST['fno_persil']);
-    $kelas_desa = mysqli_real_escape_string($connect, $_POST['fkelas_desa']);
-    $luas_milik = mysqli_real_escape_string($connect, $_POST['fluas_milik']);
-    $jenis_tanah = mysqli_real_escape_string($connect, $_POST['fjenis_tanah']);
-    $tanggal = mysqli_real_escape_string($connect, $_POST['ftanggal']);
-    $sebab_perubahan = mysqli_real_escape_string($connect, $_POST['fsebab_perubahan']);
-    $keperluan = mysqli_real_escape_string($connect, $_POST['fkeperluan']);
-    $id_pejabat_desa = mysqli_real_escape_string($connect, $_POST['ft_tangan']);
-    $id_sk = mysqli_real_escape_string($connect, $_POST['id']); // Hidden field to identify the record
+    $ft_tangan = $_POST['ft_tangan'];
+    $fno_surat = $_POST['fno_surat'];
+    $fkeperluan = $_POST['fkeperluan'];
+    $fnama_pemilik = $_POST['fnama_pemilik'];
+    $falamat_pemilik = $_POST['falamat_pemilik'];
+    $fno_persil = $_POST['fno_persil'];
+    $fkelas_desa = $_POST['fkelas_desa'];
+    $fluas_milik = $_POST['fluas_milik'];
+    $fjenis_tanah = $_POST['fjenis_tanah'];
+    $ftanggal = $_POST['ftanggal'];
+    $fketerangan_tanah = $_POST['fketerangan_tanah'];
+    $fstatus_kepemilikan = $_POST['fstatus_kepemilikan'];
 
-    // Query untuk menyimpan data ke tabel surat_keterangan
     $query = "
-        INSERT INTO surat_keterangan (
-            no_surat,
-            nama_pemilik,
-            alamat_pemilik,
-            no_persil,
-            kelas_desa,
-            luas_milik,
-            jenis_tanah,
-            tanggal,
-            sebab_perubahan,
-            keperluan,
-            id_pejabat_desa
-        ) VALUES (
-            '$no_surat',
-            '$nama_pemilik',
-            '$alamat_pemilik',
-            '$no_persil',
-            '$kelas_desa',
-            '$luas_milik',
-            '$jenis_tanah',
-            '$tanggal',
-            '$sebab_perubahan',
-            '$keperluan',
-            '$id_pejabat_desa'
-        )
+    INSERT INTO surat_keterangan (id_sk, id_pejabat_desa, no_surat, keperluan, nama_pemilik, alamat_pemilik, no_persil, kelas_desa, luas_milik, jenis_tanah, tanggal, keterangan_tanah, status_kepemilikan)
+    VALUES (NULL, '$ft_tangan', '$fno_surat', '$fkeperluan', '$fnama_pemilik', '$falamat_pemilik', '$fno_persil', '$fkelas_desa', '$fluas_milik', '$fjenis_tanah', '$ftanggal', '$fketerangan_tanah', '$fstatus_kepemilikan')
     ";
 
-    // Eksekusi query
     if (mysqli_query($connect, $query)) {
-        echo "<script>alert('Data berhasil disimpan!'); window.location.href='somepage.php';</script>";
+        // Redirect to informasi.php
+        header('Location: informasi.php');
+        exit;
     } else {
-        echo "<script>alert('Terjadi kesalahan: " . mysqli_error($connect) . "'); window.location.href='detail.php?detail=$no_persil';</script>";
+        // Redirect to permintaan-surat.php
+        header('Location: permintaan-surat.php');
+        exit;
     }
-
-    // Tutup koneksi database
-    mysqli_close($connect);
 } else {
-    // Jika bukan metode POST
-    echo "<script>alert('Permintaan tidak valid.'); window.location.href='detail.php?detail=$no_persil';</script>";
+    // Redirect to permintaan-surat.php
+    header('Location: permintaan-surat.php');
+    exit;
 }
 ?>

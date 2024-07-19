@@ -101,7 +101,7 @@ mysqli_close($connect);
         </li>
       </ul>
     </section>
-  </aside>
+</aside>
 
 
 <style>
