@@ -177,31 +177,6 @@ CREATE TABLE `perubahan` (
 
 
 
---
--- Table structure for table `riawayat_perubahan`
---
-
-CREATE TABLE `riwayat_perubahan` (
-  `id_riwayat` int(11) NOT NULL,
-  `id_kepemilikan` int(11) NOT NULL,
-  `no_persil` varchar(11) NOT NULL,
-  `nama_pemilik` varchar(100) NOT NULL,
-  `alamat_pemilik` varchar(50) NOT NULL,
-  `tanggal_perubahan` date NOT NULL,
-  `kelas_desa` varchar(10) NOT NULL,
-  `luas_milik` varchar(15) NOT NULL,
-  `jenis_tanah` varchar(15) NOT NULL,
-  `tanggal` date NOT NULL,
-  `pajak_bumi` varchar(100) NOT NULL,
-  `sebab_perubahan` varchar(50) NOT NULL,
-  `keterangan_tanah` varchar(255) NOT NULL,
-
-  PRIMARY KEY (`id_riwayat`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-
-
 
 --
 -- Table structure for table `profil_desa`
@@ -233,13 +208,17 @@ INSERT INTO `profil_desa` (`id_profil_desa`, `nama_desa`, `alamat`, `no_telpon`,
 
 CREATE TABLE `surat_keterangan` (
   `id_sk` int(11) NOT NULL,
-  `jenis_surat` varchar(50) NOT NULL,
   `no_surat` varchar(20) DEFAULT NULL,
+  `nama_pemilik` varchar(100) NOT NULL,
+  `alamat_pemilik` varchar(50) NOT NULL,
   `no_persil` varchar(20) DEFAULT NULL,
+  `kelas_desa` varchar(10) NOT NULL,
+  `luas_milik` varchar(15) NOT NULL,
+  `jenis_tanah` varchar(15) NOT NULL,
+  `tanggal` DATE NOT NULL,
   `keperluan` varchar(50) NOT NULL,
   `tanggal_surat` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_pejabat_desa` int(11) DEFAULT NULL,
-  `status_surat` varchar(15) NOT NULL,
   `id_profil_desa` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -335,10 +314,6 @@ ALTER TABLE `tanah`
 ALTER TABLE `perubahan`
   MODIFY `id_perubahan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
   
-
-
-ALTER TABLE `riwayat_perubahan`
-  MODIFY `id_riwayat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 
 --

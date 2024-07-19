@@ -211,9 +211,6 @@
 		<tr></tr>
 		<tr></tr>
 		<tr></tr>
-		<tr></tr>
-		<tr></tr>
-		<tr></tr>
 		<tr>
 			<td></td>
 			<td></td>

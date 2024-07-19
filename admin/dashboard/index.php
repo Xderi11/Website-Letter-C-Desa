@@ -90,10 +90,10 @@
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="../surat/buat_surat/"><i class="fa fa-circle-notch"></i> Letter C</a>
+              <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>
             <li>
-              <a href="../surat/permintaan_surat/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
+              <a href="../surat-keterangan/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
             </li>
           </ul>
         </li>
@@ -170,17 +170,17 @@
             <div class="inner">
               <h3>
                 <?php
-                  $qTampil = mysqli_query($connect, "SELECT tanggal_surat FROM surat_keterangan WHERE status_surat='selesai'");
-                  $jumlahPermintaanSurat = mysqli_num_rows($qTampil);
-                  echo $jumlahPermintaanSurat;
+                  $qTampil = mysqli_query($connect, "SELECT * FROM kepemilikan_letter_c ");
+                  $jumlahKepemilikan = mysqli_num_rows($qTampil);
+                  echo $jumlahKepemilikan;
                 ?>
               </h3>
-              <p>Surat Selesai</p>
+              <p>Data Letter C</p>
             </div>
             <div class="icon">
               <i class="fas fa-envelope" style="font-size:70px"></i>
             </div>
-            <a href="../surat/surat_selesai/" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="../penduduk/" class="small-box-footer">Lihat detail <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 

@@ -132,10 +132,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="../surat/buat_surat/"><i class="fa fa-circle-notch"></i> Letter C</a>
+              <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>
             <li>
-              <a href="../surat/permintaan_surat/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
+              <a href="../surat-keterangan/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
             </li>
           </ul>
         </li>
