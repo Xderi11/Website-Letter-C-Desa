@@ -115,7 +115,6 @@
           if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
         ?>
         <a class="btn btn-success btn-md" href='tambah-data-tanah.php'><i class="fas fa-plus"></i> Tambah Data Tanah</a>
-        <a target="_blank" class="btn btn-info btn-md" href='export-penduduk.php'><i class="fas fa-file-export"></i> Export .XLS</a>
         <?php 
           }
         ?>
