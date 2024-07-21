@@ -85,6 +85,15 @@ INSERT INTO `pejabat_desa` (`id_pejabat_desa`, `nama_pejabat_desa`, `jabatan`) V
 
 -- --------------------------------------------------------
 
+
+CREATE TABLE identitas (
+    `id_identitas` int(11) NOT NULL,
+    `nik` varchar(50) NOT NULL,
+    `nama_pemilik` varchar(100) NOT NULL,
+    `alamat_pemilik` varchar(50) NOT NULL,
+    PRIMARY KEY (`id_identitas`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Table structure for table `tanah`
 --
@@ -113,6 +122,7 @@ CREATE TABLE tanah (
 
 CREATE TABLE kepemilikan_letter_c (
     `id_kepemilikan` int(11) NOT NULL,
+    `nik` varchar(50) NOT NULL,
     `nama_pemilik` varchar(100) NOT NULL,
     `alamat_pemilik` varchar(50) NOT NULL,
     `no_persil` varchar(11) NOT NULL,
@@ -132,6 +142,7 @@ CREATE TABLE kepemilikan_letter_c (
 
 CREATE TABLE pemilik (
     `id_pemilik` int(11) NOT NULL,
+    `nik` varchar(50) NOT NULL,
     `id_kepemilikan` int(11) NOT NULL,
     `nama_pemilik` varchar(100) NOT NULL,
     `alamat_pemilik` varchar(50) NOT NULL,
@@ -141,6 +152,8 @@ CREATE TABLE pemilik (
     `tanggal_perubahan` date NULL,  -- Ubah menjadi NULL
     `sebab_perubahan` varchar(255) NULL,  -- Ubah menjadi NULL
     `status_kepemilikan` varchar(255) NULL,  -- Ubah menjadi NULL
+    `saksi` varchar(50) NOT NULL,
+    `notaris` varchar(50) NOT NULL,
     PRIMARY KEY (`id_pemilik`),
     CONSTRAINT `fk_id_kepemilikan` FOREIGN KEY (`id_kepemilikan`) REFERENCES `kepemilikan_letter_c`(`id_kepemilikan`)
     ON DELETE NO ACTION
@@ -158,6 +171,7 @@ CREATE TABLE pemilik (
 CREATE TABLE `perubahan` (
   `id_perubahan` int(11) NOT NULL AUTO_INCREMENT,
   `id_kepemilikan` int(11) NOT NULL,
+  `nik` varchar(50) NOT NULL,
   `no_persil` varchar(11) NOT NULL,
   `nama_pemilik` varchar(100) NOT NULL,
   `alamat_pemilik` varchar(50) NOT NULL,
@@ -170,6 +184,8 @@ CREATE TABLE `perubahan` (
   `sebab_perubahan` varchar(50) NOT NULL,
   `keterangan_tanah` varchar(255) NOT NULL,
   `status_kepemilikan` varchar(255) NULL,
+  `saksi` varchar(50) NOT NULL,
+  `notaris` varchar(50) NOT NULL,
   PRIMARY KEY (`id_perubahan`),
   CONSTRAINT `fk_id_kepemilikan_perubahan` FOREIGN KEY (`id_kepemilikan`) REFERENCES `kepemilikan_letter_c`(`id_kepemilikan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -308,7 +324,8 @@ ALTER TABLE `pemilik`
 ALTER TABLE `tanah`
   MODIFY `id_tanah` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
-
+ALTER TABLE `identitas`
+  MODIFY `id_identitas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 ALTER TABLE `perubahan`
   MODIFY `id_perubahan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

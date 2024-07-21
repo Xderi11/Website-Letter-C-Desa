@@ -122,7 +122,7 @@ mysqli_close($connect);
         <h1>Pengecekan No Persil</h1>
         <ol class="breadcrumb">
             <li><a href="../../dashboard/"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
-            <li class="active">Surat Letter C</li>
+            <li class="active">Surat Keterangan</li>
         </ol>
     </section>
   

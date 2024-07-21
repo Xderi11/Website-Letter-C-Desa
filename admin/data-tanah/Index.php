@@ -1,6 +1,19 @@
 <?php 
   include ('../part/akses.php');
   include ('../part/header.php');
+  include('../../config/koneksi.php');
+
+// Query untuk mengambil data
+$query = "SELECT * FROM tanah WHERE id_tanah = 'some_id'";
+$result = mysqli_query($connect, $query);
+
+// Cek apakah query berhasil
+if (!$result) {
+    die("Query gagal: " . mysqli_error($connect));
+}
+
+// Ambil data
+$row = mysqli_fetch_assoc($result);
 ?>
 
 <aside class="main-sidebar">
@@ -39,9 +52,14 @@
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
             <li>
-              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
             </li>
           </ul>
+        </li>
+        <li>
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
         </li>
         <li class="treeview">
             <a href="#">
@@ -151,7 +169,7 @@
               <td><?php echo $no++; ?></td>
               <td style="text-transform: capitalize;"><?php echo $row['no_persil']; ?></td>
               <td style="text-transform: capitalize;"><?php echo $row['kelas_desa']; ?></td>
-              <td style="text-transform: capitalize;"><?php echo $row['luas_milik']; ?></td>
+              <td style="text-transform: capitalize;"><?php echo htmlspecialchars($row['luas_milik']) . ' M²'; ?></td>
               <td style="text-transform: capitalize;"><?php echo $row['jenis_tanah']; ?></td>
               <td>Rp. <?php echo number_format($row['pajak_bumi'], 0, ','); ?></td>
               <td style="text-transform: capitalize;"><?php echo $row['keterangan_tanah']; ?></td>

@@ -1,48 +1,15 @@
 <?php
-session_start();
+ include ('../part/akses.php');
+
+// Include database connection
 include ('../../config/koneksi.php');
 
-if(isset($_POST['submit'])) {
-    $nama_pemilik = $_POST['fnama_pemilik'] ?? '';
-    $alamat_pemilik = $_POST['falamat_pemilik'] ?? '';
-    $no_persil = $_POST['fno_persil'] ?? '';
-    $kelas_desa = $_POST['fkelas_desa'] ?? '';
-    $luas_milik = $_POST['fluas_milik'] ?? '';
-    $jenis_tanah = $_POST['fjenis_tanah'] ?? '';
-    $tanggal = $_POST['ftanggal'] ?? '';
-    $pajak_bumi = str_replace('.', '', $_POST['fpajak_bumi']) ?? ''; // Menghapus titik sebagai pemisah ribuan
-    $keterangan_tanah = $_POST['fketerangan_tanah'] ?? '';
-    $id_kepemilikan = $_POST['fid_kepemilikan'] ?? ''; // Ambil id_kepemilikan dari form atau sesuai dengan logika aplikasi
-
-    // Siapkan query untuk memasukkan data baru ke pemilik
-    $query_insert_pemilik = "
-        INSERT INTO pemilik (nama_pemilik, alamat_pemilik, no_persil, tanggal, keterangan_tanah, sebab_perubahan, status_kepemilikan, id_kepemilikan)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ";
-
-    $stmt_insert_pemilik = $connect->prepare($query_insert_pemilik);
-    $stmt_insert_pemilik->bind_param("ssssssss", $nama_pemilik, $alamat_pemilik, $no_persil, $tanggal, $keterangan_tanah, $sebab_perubahan, $status_kepemilikan, $id_kepemilikan);
-
-    if ($stmt_insert_pemilik->execute()) {
-        $_SESSION['success_message'] = "Data Letter C berhasil ditambahkan.";
-        header("Location: index.php");
-        exit;
-    } else {
-        $_SESSION['error_message'] = "Gagal menambahkan data Letter C: " . $stmt_insert_pemilik->error;
-        header("Location: tambah-penduduk.php");
-        exit;
-    }
-}
-
-mysqli_close($connect);
+// Fetch NIK from database for dropdown
+$query = "SELECT nik FROM identitas";
+$result = $connect->query($query);
 ?>
 
-
-
-
-<?php 
-include ('../part/header.php');
-?>
+<?php include('../part/header.php'); ?>
 
 <aside class="main-sidebar">
     <section class="sidebar">
@@ -68,7 +35,7 @@ include ('../part/header.php');
             <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
           </a>
         </li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
             <span class="pull-right-container">
@@ -79,10 +46,15 @@ include ('../part/header.php');
             <li>
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
-            <li class="active">
-              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+            <li>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
             </li>
           </ul>
+        </li>
+        <li class="active">
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
         </li>
         <li class="treeview">
             <a href="#">
@@ -125,7 +97,7 @@ include ('../part/header.php');
         ?>
       </ul>
     </section>
-  </aside>
+</aside>
 
 <div class="content-wrapper">
     <section class="content-header">
@@ -139,17 +111,15 @@ include ('../part/header.php');
     <section class="content">      
         <div class="row">
             <div class="col-md-12">
-            <?php
-                if(isset($_SESSION['error_message'])) {
-                    echo "<div class='alert alert-danger'>".$_SESSION['error_message']."</div>";
-                    unset($_SESSION['error_message']);
-                }
-
-                if(isset($_SESSION['success_message'])) {
-                    echo "<div class='alert alert-success'>".$_SESSION['success_message']."</div>";
-                    unset($_SESSION['success_message']);
-                }
-                ?>
+            <!-- Tampilkan pesan error jika ada -->
+            <?php 
+                        if (isset($error_message) && $error_message !== ""){
+                            echo "<div class='alert alert-danger'><center>$error_message</center></div>";
+                        }
+                        if (isset($success_message) && $success_message !== ""){
+                            echo "<div class='alert alert-success'><center>$success_message</center></div>";
+                        }
+                    ?>
                 <br>
             </div>
             <div class="col-md-12">
@@ -167,15 +137,26 @@ include ('../part/header.php');
                                 <div class="col-md-6">
                                     <div class="box-body">
                                         <div class="form-group">
+                                            <label class="col-sm-4 control-label">NIK</label>
+                                            <div class="col-sm-8">
+                                                <select name="fnik" class="form-control" id="nikSelect" required>
+                                                    <option value="">Pilih NIK</option>
+                                                    <?php while ($row = $result->fetch_assoc()) { ?>
+                                                        <option value="<?php echo $row['nik']; ?>"><?php echo $row['nik']; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-sm-4 control-label">Nama Pemilik</label>
                                             <div class="col-sm-8">
-                                                <input type="text" name="fnama_pemilik" class="form-control" style="text-transform: capitalize;" placeholder="Nama Pemilik" required>
+                                                <input type="text" name="fnama_pemilik" class="form-control" style="text-transform: capitalize;" placeholder="Nama Pemilik" required readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Alamat Pemilik</label>
                                             <div class="col-sm-8">
-                                                <input type="text" name="falamat_pemilik" class="form-control" style="text-transform: capitalize;" placeholder="Alamat Pemilik" required>
+                                                <input type="text" name="falamat_pemilik" class="form-control" style="text-transform: capitalize;" placeholder="Alamat Pemilik" required readonly>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -208,7 +189,6 @@ include ('../part/header.php');
                                                 <input type="text" name="fpajak_bumi" class="form-control" style="text-transform: capitalize;" placeholder="Pajak Bumi" required>
                                             </div>
                                         </div>
-                                        </div>
                                         <div class="form-group">
                                             <label class="col-sm-4 control-label">Keterangan Tanah</label>
                                             <div class="col-sm-8">
@@ -222,15 +202,13 @@ include ('../part/header.php');
                                             </div>
                                         </div>
                                         <div class="box-footer pull-right">
-                                            <input type="button" class="btn btn-default" value="Batal" onclick="window.location.href='index.php';">
-                                            <input type="submit" name="submit" class="btn btn-info" value="Submit">
+                                            <input type="button" class="btn btn-danger" value="Batal" onclick="location.href='index.php'">
+                                            <input type="submit" class="btn btn-primary" value="Simpan">
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </div>
-                    <div class="box-footer">
                     </div>
                 </div>
             </div>
@@ -238,11 +216,41 @@ include ('../part/header.php');
     </section>
 </div>
 
-<?php 
-include ('../part/footer.php');
-?> 
+
+<?php include('../part/footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('#nikSelect').on('change', function(){
+        var nik = $(this).val();
+        if(nik) {
+            $.ajax({
+                type: 'POST',
+                url: 'get-data-identitas.php',
+                data: {nik: nik},
+                dataType: 'json',
+                success: function(response){
+                    if(response.error) {
+                        alert(response.error);
+                    } else {
+                        $('input[name="fnama_pemilik"]').val(response.nama_pemilik);
+                        $('input[name="falamat_pemilik"]').val(response.alamat_pemilik);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error: ' + status + error);
+                }
+            });
+        } else {
+            // Clear the form fields if no NIK is selected
+            $('input[name="fnama_pemilik"]').val('');
+            $('input[name="falamat_pemilik"]').val('');
+        }
+    });
+});
+
+</script>
 <script>
 $(document).ready(function(){
     $('input[name="fno_persil"]').on('blur', function(){
@@ -254,7 +262,6 @@ $(document).ready(function(){
                 data: {no_persil: no_persil},
                 dataType: 'json',
                 success: function(response){
-                    console.log(response); // <-- Tambahkan ini untuk debug
                     if(response.error) {
                         alert(response.error);
                     } else {

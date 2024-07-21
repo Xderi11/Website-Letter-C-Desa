@@ -127,7 +127,10 @@
                     <div class="form-group">
                       <label class="col-sm-4 control-label">Luas Lahan</label>
                       <div class="col-sm-8">
-                        <input type="text" name="fluas_milik" class="form-control" style="text-transform: capitalize;" placeholder="Luas Lahan" required>                   
+                        <div class="input-group">
+                          <input type="text" name="fluas_milik" class="form-control" placeholder="Luas Lahan" required>
+                          <span class="input-group-addon">M<sup>2</sup></span>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -141,7 +144,7 @@
                       <div class="col-sm-8">
                         <div class="input-group">
                           <span class="input-group-addon">Rp</span>
-                          <input type="text" name="fpajak_bumi" class="form-control" style="text-transform: capitalize;" placeholder="Pajak Bumi (hanya angka)" pattern="\d*" title="Hanya angka yang diperbolehkan" required>                   
+                          <input type="text" name="fpajak_bumi" class="form-control" pattern="\d*" title="Hanya angka yang diperbolehkan" placeholder="Pajak Bumi (hanya angka)" required>                   
                         </div>
                       </div>
                     </div>

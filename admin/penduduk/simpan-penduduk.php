@@ -1,73 +1,44 @@
 <?php
-session_start();
-include('../../config/koneksi.php');
+include ('../part/akses.php');
+include ('../../config/koneksi.php');
 
-if (isset($_POST['submit'])) {
-    $nama_pemilik = $_POST['fnama_pemilik'] ?? '';
-    $alamat_pemilik = $_POST['falamat_pemilik'] ?? '';
-    $no_persil = $_POST['fno_persil'] ?? '';
-    $kelas_desa = $_POST['fkelas_desa'] ?? '';
-    $luas_milik = $_POST['fluas_milik'] ?? '';
-    $jenis_tanah = $_POST['fjenis_tanah'] ?? '';
-    $tanggal = $_POST['ftanggal'] ?? '';
-    $pajak_bumi = str_replace('.', '', $_POST['fpajak_bumi']) ?? ''; // Menghapus titik sebagai pemisah ribuan
-    $keterangan_tanah = $_POST['fketerangan_tanah'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Ambil data dari form
+    $nik = $_POST['fnik'];
+    $nama_pemilik = $_POST['fnama_pemilik'];
+    $alamat_pemilik = $_POST['falamat_pemilik'];
+    $no_persil = $_POST['fno_persil'];
+    $kelas_desa = $_POST['fkelas_desa'];
+    $luas_milik = $_POST['fluas_milik'];
+    $jenis_tanah = $_POST['fjenis_tanah'];
+    $pajak_bumi = $_POST['fpajak_bumi'];
+    $keterangan_tanah = $_POST['fketerangan_tanah'];
+    $tanggal = $_POST['ftanggal'];
 
-    // Nilai default untuk kolom tambahan di tabel pemilik
-    $tanggal_perubahan = $_POST['ftanggal_perubahan'] ?? null;
-    $sebab_perubahan = $_POST['fsebab_perubahan'] ?? null;
-    $status_kepemilikan = $_POST['fstatus_kepemilikan'] ?? null;
+    // Masukkan data ke tabel kepemilikan_letter_c
+    $query1 = "INSERT INTO kepemilikan_letter_c (nik, nama_pemilik, alamat_pemilik, no_persil, kelas_desa, luas_milik, jenis_tanah, pajak_bumi, keterangan_tanah, tanggal) 
+               VALUES ('$nik', '$nama_pemilik', '$alamat_pemilik', '$no_persil', '$kelas_desa', '$luas_milik', '$jenis_tanah', '$pajak_bumi', '$keterangan_tanah', '$tanggal')";
+    
+    if ($connect->query($query1) === TRUE) {
+        // Ambil ID terakhir yang dimasukkan
+        $id_kepemilikan = $connect->insert_id;
 
-    // Mulai transaksi
-    $connect->begin_transaction();
+        // Masukkan data ke tabel perubahan
+        $query2 = "INSERT INTO perubahan (id_kepemilikan, no_persil, nik, nama_pemilik, alamat_pemilik, kelas_desa, luas_milik, jenis_tanah, pajak_bumi, keterangan_tanah, tanggal) 
+                   VALUES ('$id_kepemilikan', '$no_persil', '$nik', '$nama_pemilik', '$alamat_pemilik', '$kelas_desa', '$luas_milik', '$jenis_tanah', '$pajak_bumi', '$keterangan_tanah', '$tanggal')";
 
-    try {
-        // Siapkan query untuk memasukkan data baru ke kepemilikan_letter_c
-        $query_insert_letter_c = "
-            INSERT INTO kepemilikan_letter_c (nama_pemilik, alamat_pemilik, no_persil, kelas_desa, luas_milik, jenis_tanah, tanggal, pajak_bumi, keterangan_tanah)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ";
-
-        $stmt_insert_letter_c = $connect->prepare($query_insert_letter_c);
-        $stmt_insert_letter_c->bind_param("sssssssss", $nama_pemilik, $alamat_pemilik, $no_persil, $kelas_desa, $luas_milik, $jenis_tanah, $tanggal, $pajak_bumi, $keterangan_tanah);
-
-        // Eksekusi query untuk kepemilikan_letter_c
-        if ($stmt_insert_letter_c->execute() === false) {
-            throw new Exception("Gagal menambahkan data ke kepemilikan_letter_c: " . $stmt_insert_letter_c->error);
+        if ($connect->query($query2) === TRUE) {
+            $_SESSION['success_message'] = "Data berhasil disimpan.";
+        } else {
+            $_SESSION['error_message'] = "Error: " . $connect->error;
+            echo "Error: " . $connect->error; // Tambahkan ini untuk melihat pesan error
         }
-
-        // Ambil id_kepemilikan yang baru saja dimasukkan
-        $id_kepemilikan = $stmt_insert_letter_c->insert_id;
-
-        // Siapkan query untuk memasukkan data baru ke pemilik
-        $query_insert_pemilik = "
-            INSERT INTO pemilik (id_kepemilikan, nama_pemilik, no_persil, alamat_pemilik, tanggal, keterangan_tanah, tanggal_perubahan, sebab_perubahan, status_kepemilikan)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ";
-
-        $stmt_insert_pemilik = $connect->prepare($query_insert_pemilik);
-        
-        // Bind parameters with null handling
-        $stmt_insert_pemilik->bind_param("issssssss", $id_kepemilikan, $nama_pemilik, $no_persil, $alamat_pemilik, $tanggal, $keterangan_tanah, $tanggal_perubahan, $sebab_perubahan, $status_kepemilikan);
-
-        // Eksekusi query untuk pemilik
-        if ($stmt_insert_pemilik->execute() === false) {
-            throw new Exception("Gagal menambahkan data ke pemilik: " . $stmt_insert_pemilik->error);
-        }
-
-        // Komit transaksi
-        $connect->commit();
-        $_SESSION['success_message'] = "Data Letter C berhasil ditambahkan.";
-        header("Location: index.php");
-        exit;
-    } catch (Exception $e) {
-        // Rollback transaksi jika terjadi kesalahan
-        $connect->rollback();
-        $_SESSION['error_message'] = $e->getMessage();
-        header("Location: tambah-penduduk.php");
-        exit;
+    } else {
+        $_SESSION['error_message'] = "Error: " . $connect->error;
+        echo "Error: " . $connect->error; // Tambahkan ini untuk melihat pesan error
     }
-}
 
-mysqli_close($connect);
+    header('Location: index.php');
+    exit();
+}
 ?>

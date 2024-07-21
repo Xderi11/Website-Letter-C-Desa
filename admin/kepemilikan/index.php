@@ -67,9 +67,14 @@ mysqli_close($connect);
                         <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
                     </li>
                     <li>
-                        <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+                        <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <a href="../penduduk/">
+                    <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+                </a>
             </li>
             <li class="active treeview">
                 <a href="#">
@@ -142,25 +147,13 @@ mysqli_close($connect);
                     ?>
                 </div>
 
-                <!-- Form untuk memasukkan nama pemilik dan no persil -->
-                <form action="index.php" method="POST" class="form-inline">
-                    <div class="form-group">
-                        <label for="nama_pemilik">Nama:</label>
-                        <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" value="<?php echo $nama_pemilik; ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="no_persil">No Persil:</label>
-                        <input type="text" class="form-control" id="no_persil" name="no_persil" value="<?php echo $no_persil; ?>" required>
-                    </div>
-                    <button type="submit" name="submit" class="btn btn-primary">Cek Data</button>
-                </form>
-
                 <br><br>
 
                 <table class="table table-striped table-bordered table-responsive" id="data-table" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th><strong>No</strong></th>
+                            <th><strong>NIK</strong></th>
                             <th><strong>Nama Pemilik</strong></th>
                             <th><strong>No Persil</strong></th>
                             <th><strong>Tanggal Penerbitan</strong></th>
@@ -191,6 +184,7 @@ mysqli_close($connect);
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
                                 echo "<td>" . $no++ . "</td>";
+                                echo "<td>" . $row['nik'] . "</td>";
                                 echo "<td>" . $row['nama_pemilik'] . "</td>";
                                 echo "<td>" . $row['no_persil'] . "</td>";
                                 echo "<td>" . $row['tanggal'] . "</td>";
@@ -199,7 +193,7 @@ mysqli_close($connect);
                                 echo "<td>" . $row['sebab_perubahan'] . "</td>";
                                 echo "<td>" . $row['status_kepemilikan'] . "</td>";
                                 if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
-                                    echo "<td><a href='edit-kepemilikan.php?no_persil=" . $row['no_persil'] . "' class='btn btn-warning'>Edit</a></td>";
+                                    echo "<td><a href='detail.php?no_persil=" . $row['no_persil'] . "' class='btn btn-success'>detail</a></td>";
                                 }
                                 echo "</tr>";
                             }

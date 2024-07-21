@@ -106,7 +106,7 @@ $row = mysqli_fetch_assoc($result);
                         <?php if ($row) { ?>
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">ID Pejabat Desa</label>
+                                    <label class="col-sm-3 control-label">Pejabat Desa</label>
                                     <div class="col-sm-9">
                                         <input type="text" value="<?php echo ($row['id_pejabat_desa'] == 1 ? 'Tribowo, Kepala Desa' : ($row['id_pejabat_desa'] == 2 ? 'Yoyok Andrianto, Kasi Pemerintahan' : '')); ?>" class="form-control" readonly>
                                     </div>
