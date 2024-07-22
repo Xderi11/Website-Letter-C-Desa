@@ -99,9 +99,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
             <li>
-              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
             </li>
           </ul>
+        </li>
+        <li>
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
         </li>
         <li class="treeview">
             <a href="#">
@@ -131,6 +136,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </span>
           </a>
           <ul class="treeview-menu">
+            <li>
+              <a href="../laporan-kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+            </li>
             <li>
               <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>

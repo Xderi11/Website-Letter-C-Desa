@@ -95,6 +95,9 @@ if(isset($_GET['detail'])) {
           </a>
           <ul class="treeview-menu">
             <li>
+              <a href="../laporan-kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+            </li>
+            <li>
               <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>
             <li>

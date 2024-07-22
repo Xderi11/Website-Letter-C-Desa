@@ -95,7 +95,7 @@ $data = mysqli_fetch_assoc($result);
                 <tr>
                     <td class="indentasi">Luas Tanah</td>
                     <td>:</td>
-                    <td><?php echo isset($data['luas_milik']) ? $data['luas_milik'] : 'Data tidak tersedia'; ?></td>
+                    <td><?php echo isset($data['luas_milik']) ? $data['luas_milik'] . ' m<sup>2</sup>' : 'Data tidak tersedia'; ?></td>
                 </tr>
                 <tr>
                     <td class="indentasi">Jenis Tanah</td>

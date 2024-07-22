@@ -7,7 +7,6 @@ $id = $_GET['id'];
 $qCek = mysqli_query($connect,"SELECT * FROM kepemilikan_letter_c WHERE id_kepemilikan='$id'");
 $row = mysqli_fetch_assoc($qCek);
 ?>
-
 <aside class="main-sidebar">
     <section class="sidebar">
       <div class="user-panel">
@@ -32,7 +31,7 @@ $row = mysqli_fetch_assoc($qCek);
             <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
           </a>
         </li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
             <span class="pull-right-container">
@@ -43,10 +42,15 @@ $row = mysqli_fetch_assoc($qCek);
             <li>
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
-            <li class="active">
-              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+            <li>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
             </li>
           </ul>
+        </li>
+        <li class="active">
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
         </li>
         <li class="treeview">
             <a href="#">
@@ -77,6 +81,9 @@ $row = mysqli_fetch_assoc($qCek);
           </a>
           <ul class="treeview-menu">
             <li>
+              <a href="../laporan-kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+            </li>
+            <li>
               <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>
             <li>
@@ -89,7 +96,8 @@ $row = mysqli_fetch_assoc($qCek);
         ?>
       </ul>
     </section>
-  </aside>
+</aside>
+
 
 
 <div class="content-wrapper">

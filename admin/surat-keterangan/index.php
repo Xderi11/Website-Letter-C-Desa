@@ -27,6 +27,7 @@ if(isset($_POST['submit'])){
 // Tutup koneksi database
 mysqli_close($connect);
 ?>
+
 <aside class="main-sidebar">
     <section class="sidebar">
       <div class="user-panel">
@@ -63,9 +64,14 @@ mysqli_close($connect);
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
             <li>
-              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
             </li>
           </ul>
+        </li>
+        <li>
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
         </li>
         <li class="treeview">
             <a href="#">
@@ -91,6 +97,9 @@ mysqli_close($connect);
             </span>
           </a>
           <ul class="treeview-menu">
+            <li >
+              <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+            </li>
             <li >
               <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
             </li>

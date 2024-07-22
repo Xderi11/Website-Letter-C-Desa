@@ -121,6 +121,9 @@ if(isset($_POST['submit'])){
                 </a>
                 <ul class="treeview-menu">
                     <li>
+                        <a href="../laporan-kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+                    </li>
+                    <li>
                         <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
                     </li>
                     <li>
@@ -187,7 +190,6 @@ if(isset($_POST['submit'])){
                             <th><strong>Saksi</strong></th>
                             <th><strong>Notaris</strong></th>
                             <th><strong>Status Kepemilikan</strong></th>
-                            <th><strong>Aksi</strong></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -211,7 +213,7 @@ if(isset($_POST['submit'])){
                         echo "<td>" . htmlspecialchars($row['saksi']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['notaris']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['status_kepemilikan']) . "</td>";
-                        echo "<td><a href='edit-perubahan.php?no_persil=" . $row['no_persil'] . "' class='btn btn-warning'>Edit</a></td>";
+
                         echo "</tr>";
                         $no++;
                     }
