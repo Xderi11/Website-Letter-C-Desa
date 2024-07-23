@@ -19,7 +19,7 @@ if(isset($_GET['nik'])) {
     // Query untuk mengambil data pemilik berdasarkan nik dari tabel perubahan
     $query_perubahan = "SELECT nik, nama_pemilik, no_persil, tanggal, tanggal_perubahan, sebab_perubahan, status_kepemilikan 
                         FROM perubahan 
-                        WHERE nik = '$nik' AND status_kepemilikan IS NOT NULL AND status_kepemilikan != ''";
+                        WHERE nik = '$nik' AND status_kepemilikan IS NOT NULL AND status_kepemilikan != '' order by tanggal_perubahan desc";
     
     $result_perubahan = mysqli_query($connect, $query_perubahan);
 
