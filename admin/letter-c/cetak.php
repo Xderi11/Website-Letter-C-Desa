@@ -24,18 +24,28 @@ if (isset($_POST['no_persil'])) {
         echo "<div class='alert alert-danger'><center>Data pemilik tidak ditemukan untuk nomor persil tersebut.</center></div>";
     }
 
-    // Query untuk mengambil data perubahan berdasarkan nomor persil dan status kepemilikan "Tidak Aktif"
+    // Query untuk mengambil data tanah berdasarkan nomor persil dari tabel tanah
+    $query_tanah = "SELECT no_persil, jenis_tanah, kelas_desa, luas_milik, pajak_bumi, keterangan_tanah FROM tanah WHERE no_persil = '$no_persil'";
+    $result_tanah = mysqli_query($connect, $query_tanah);
+
+    if ($result_tanah && mysqli_num_rows($result_tanah) > 0) {
+        // Ambil data jika ditemukan
+        $data_tanah = mysqli_fetch_assoc($result_tanah);
+    } else {
+        echo "<div class='alert alert-danger'><center>Data tanah tidak ditemukan untuk nomor persil tersebut.</center></div>";
+    }
+
+    // Query untuk mengambil data perubahan berdasarkan nomor persil dan status kepemilikan tidak kosong atau null
     $query_detail = "
-        SELECT pu.no_persil, t.jenis_tanah, pu.kelas_desa, pu.luas_milik, pu.pajak_bumi, pu.sebab_perubahan, pu.tanggal_perubahan 
-        FROM perubahan pu
-        LEFT JOIN tanah t ON pu.no_persil = t.no_persil
-        WHERE pu.no_persil = '$no_persil' AND pu.status_kepemilikan = 'Tidak Aktif'
+        SELECT no_persil, kelas_desa, luas_milik, pajak_bumi, sebab_perubahan, tanggal_perubahan 
+        FROM perubahan 
+        WHERE no_persil = '$no_persil' AND status_kepemilikan IS NOT NULL AND status_kepemilikan != ''
     ";
     $result_detail = mysqli_query($connect, $query_detail);
 
     if ($result_detail && mysqli_num_rows($result_detail) > 0) {
         // Ambil data jika ditemukan
-        $data = mysqli_fetch_all($result_detail, MYSQLI_ASSOC);
+        $data_perubahan = mysqli_fetch_all($result_detail, MYSQLI_ASSOC);
     } else {
         echo "<div class='alert alert-danger'><center>Data perubahan tidak ditemukan untuk nomor persil tersebut.</center></div>";
     }
@@ -161,7 +171,37 @@ mysqli_close($connect);
     <thead>
         <tr>
             <div class="garis"></div>
-            <th colspan="5"><?php echo isset($data[0]['jenis_tanah']) ? strtoupper($data[0]['jenis_tanah']) : ''; ?></th>
+        </tr>
+        <tr>
+            <th>Nomor Persil</th>
+            <th>Kelas Desa</th>
+            <th>Luas Milik</th>
+            <th>Jenis Tanah</th>
+            <th>Pajak Bumi</th>
+            <th>Keterangan Tanah</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Menampilkan data tanah jika ada
+        if (isset($data_tanah)) {
+            echo "<tr>";
+            echo "<td>" . strtoupper($data_tanah['no_persil']) . "</td>";
+            echo "<td>" . strtoupper($data_tanah['kelas_desa']) . "</td>";
+            echo "<td>" . strtoupper($data_tanah['luas_milik']) . "</td>";
+            echo "<td>" . strtoupper($data_tanah['jenis_tanah']) . "</td>";
+            echo "<td>" . 'Rp. ' . number_format($data_tanah['pajak_bumi'], 0, ',', '.') . "</td>";
+            echo "<td>" . strtoupper($data_tanah['keterangan_tanah']) . "</td>";
+            echo "</tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <div class="garis"></div>
         </tr>
         <tr>
             <th>Nomor Persil/Blok</th>
@@ -174,8 +214,8 @@ mysqli_close($connect);
     <tbody>
         <?php
         // Menampilkan data perubahan jika ada
-        if (isset($data) && count($data) > 0) {
-            foreach ($data as $row) {
+        if (isset($data_perubahan) && count($data_perubahan) > 0) {
+            foreach ($data_perubahan as $row) {
                 // Mengubah format tanggal
                 $tanggal_perubahan = date('d-m-Y', strtotime($row['tanggal_perubahan']));
                 

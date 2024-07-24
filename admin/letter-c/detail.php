@@ -9,21 +9,27 @@ include('../../config/koneksi.php');
 if(isset($_GET['detail'])) {
     $no_persil = $_GET['detail'];
 
-    // Query untuk mengambil data pemilik berdasarkan nomor persil dari tabel pemilik dan perubahan
+    // Query untuk mengambil data pemilik berdasarkan nomor persil dari tabel pemilik
     $query_detail = "SELECT p.nama_pemilik, p.alamat_pemilik, p.no_persil, t.keterangan_tanah, p.sebab_perubahan, p.status_kepemilikan 
                      FROM pemilik p 
                      LEFT JOIN tanah t ON p.no_persil = t.no_persil
-                     WHERE p.no_persil = '$no_persil' AND p.status_kepemilikan = 'Aktif'
-                     UNION
-                     SELECT pu.nama_pemilik, pu.alamat_pemilik, pu.no_persil, t.keterangan_tanah, pu.sebab_perubahan, pu.status_kepemilikan 
-                     FROM perubahan pu
-                     LEFT JOIN tanah t ON pu.no_persil = t.no_persil
-                     WHERE pu.no_persil = '$no_persil' AND pu.status_kepemilikan = 'Tidak Aktif'";
-    
+                     WHERE p.no_persil = '$no_persil' AND p.status_kepemilikan = 'Aktif'";
     $result_detail = mysqli_query($connect, $query_detail);
 
-    if(mysqli_num_rows($result_detail) > 0) {
+    // Query untuk mengambil data perubahan berdasarkan nomor persil
+    $query_perubahan = "SELECT pu.nik, pu.nama_pemilik, pu.alamat_pemilik, pu.kelas_desa, pu.luas_milik, pu.pajak_bumi, pu.no_persil, t.keterangan_tanah, pu.sebab_perubahan, pu.tanggal_perubahan, pu.status_kepemilikan 
+                        FROM perubahan pu
+                        LEFT JOIN tanah t ON pu.no_persil = t.no_persil
+                        WHERE pu.no_persil = '$no_persil' AND pu.status_kepemilikan IS NOT NULL AND pu.status_kepemilikan != ''";
+    $result_perubahan = mysqli_query($connect, $query_perubahan);
 
+    // Query untuk mengambil data tanah berdasarkan nomor persil
+    $query_tanah = "SELECT no_persil, kelas_desa, luas_milik, jenis_tanah, pajak_bumi, keterangan_tanah 
+                    FROM tanah 
+                    WHERE no_persil = '$no_persil'";
+    $result_tanah = mysqli_query($connect, $query_tanah);
+
+    if(mysqli_num_rows($result_detail) > 0 || mysqli_num_rows($result_perubahan) > 0) {
 ?>
 
 <aside class="main-sidebar">
@@ -129,47 +135,100 @@ if(isset($_GET['detail'])) {
 
     <section class="content">
         <div class="row">
+            <!-- Data Tanah -->
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Detail Pemilik dengan Nomor Persil: <?php echo $no_persil; ?></h3>
+                        <h3 class="box-title">Data Tanah: <?php echo $no_persil; ?></h3>
                     </div>
-
-                    
-                    <table class="table table-bordered" style="margin-top: 20px;">
-                        <thead>
-                            <tr>
-                                <th>Nama Pemilik</th>
-                                <th>Alamat Pemilik</th>
-                                <th>Nomor Persil</th>
-                                <th>Keterangan Tanah</th>
-                                <th>Sebab Perubahan</th>
-                                <th>Status Kepemilikan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row_detail = mysqli_fetch_assoc($result_detail)) { ?>
+                    <div class="box-body">
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
                                 <tr>
-                                    <td><?php echo $row_detail['nama_pemilik']; ?></td>
-                                    <td><?php echo $row_detail['alamat_pemilik']; ?></td>
-                                    <td><?php echo $row_detail['no_persil']; ?></td>
-                                    <td><?php echo $row_detail['keterangan_tanah']; ?></td>
-                                    <td><?php echo $row_detail['sebab_perubahan']; ?></td>
-                                    <td><?php echo $row_detail['status_kepemilikan']; ?></td>
+                                    <th>No Persil</th>
+                                    <th>Kelas Desa</th>
+                                    <th>Luas Milik</th>
+                                    <th>Jenis Tanah</th>
+                                    <th>Pajak Bumi</th>
+                                    <th>Keterangan Tanah</th>
                                 </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                if(mysqli_num_rows($result_tanah) > 0) {
+                                    while ($row_tanah = mysqli_fetch_assoc($result_tanah)) { 
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row_tanah['no_persil']; ?></td>
+                                        <td><?php echo $row_tanah['kelas_desa']; ?></td>
+                                        <td><?php echo $row_tanah['luas_milik']; ?></td>
+                                        <td><?php echo $row_tanah['jenis_tanah']; ?></td>
+                                        <td>Rp. <?php echo number_format($row_tanah['pajak_bumi'], 2, ',', '.'); ?></td>
+                                        <td><?php echo $row_tanah['keterangan_tanah']; ?></td>
+                                    </tr>
+                                <?php 
+                                    } 
+                                } else {
+                                    echo "<tr><td colspan='6'>Data tidak ditemukan untuk nomor persil tersebut.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-                    <form id="printForm" action="cetak.php" method="post" target="_blank" style="text-align: right; margin-top: 20px;">
-    <input type="hidden" name="no_persil" value="<?php echo $no_persil; ?>">
-    <button type="submit" class="btn btn-primary" id="btnCetak">Cetak</button>
-</form>
-
-
+            <!-- Data Perubahan -->
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Data Perubahan dengan Nomor Persil: <?php echo $no_persil; ?></h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                            <tr>
+                                    <th>NIK</th>
+                                    <th>Nama Pemilik</th>
+                                    <th>No Persil</th>
+                                    <th>Kelas Desa</th>
+                                    <th>Luas Milik</th>
+                                    <th>Pajak Bumi</th>
+                                    <th>Sebab dan Tanggal Perubahan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                while ($row_perubahan = mysqli_fetch_assoc($result_perubahan)) { 
+                                    $sebab_dan_tanggal = $row_perubahan['sebab_perubahan'];
+                                    if (!empty($row_perubahan['tanggal_perubahan'])) {
+                                        $sebab_dan_tanggal .= ' (Tanggal: ' . date('d-m-Y', strtotime($row_perubahan['tanggal_perubahan'])) . ')';
+                                    }
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row_perubahan['nik']; ?></td>
+                                        <td><?php echo $row_perubahan['nama_pemilik']; ?></td>
+                                        <td><?php echo $row_perubahan['no_persil']; ?></td>
+                                        <td><?php echo $row_perubahan['kelas_desa']; ?></td>
+                                        <td><?php echo $row_perubahan['luas_milik']; ?></td>
+                                        <td>Rp. <?php echo number_format($row_perubahan['pajak_bumi'], 2, ',', '.'); ?></td>
+                                        <td><?php echo $sebab_dan_tanggal; ?></td>
+                                    </tr>
+                                <?php 
+                                } 
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Tombol Cetak -->
+        <form id="printForm" action="cetak.php" method="post" target="_blank" style="text-align: right; margin-top: 20px;">
+            <input type="hidden" name="no_persil" value="<?php echo $no_persil; ?>">
+            <button type="submit" class="btn btn-primary" id="btnCetak">Cetak</button>
+        </form>
     </section>
 </div>
 
@@ -187,10 +246,10 @@ if(isset($_GET['detail'])) {
 include ('../part/footer.php');
 ?>
 
-
 <script>
 document.getElementById("btnCetak").addEventListener("click", function() {
     // Ketika tombol "Cetak" ditekan, submit form untuk mencetak
     document.getElementById("printForm").submit();
 });
 </script>
+
