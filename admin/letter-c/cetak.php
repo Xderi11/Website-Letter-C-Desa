@@ -26,7 +26,7 @@ if (isset($_POST['no_persil'])) {
 
     // Query untuk mengambil data perubahan berdasarkan nomor persil dan status kepemilikan "Tidak Aktif"
     $query_detail = "
-        SELECT pu.no_persil, t.jenis_tanah, pu.kelas_desa, pu.luas_milik, pu.pajak_bumi, pu.sebab_perubahan, pu.tanggal_perubahan 
+        SELECT pu.no_persil, t.jenis_tanah, pu.kelas_desa, pu.luas_milik, pu.pajak_bumi, pu.sebab_perubahan, pu.tanggal_perubahan, t.keterangan_tanah 
         FROM perubahan pu
         LEFT JOIN tanah t ON pu.no_persil = t.no_persil
         WHERE pu.no_persil = '$no_persil' AND pu.status_kepemilikan = 'Tidak Aktif'
@@ -157,11 +157,48 @@ mysqli_close($connect);
     <p><span>ALAMAT<span class="info-label2">:</span></span> <strong><?php echo $alamat_pemilik; ?></strong></p>
 </div>
 
+
 <table class="table">
     <thead>
         <tr>
             <div class="garis"></div>
-            <th colspan="5"><?php echo isset($data[0]['jenis_tanah']) ? strtoupper($data[0]['jenis_tanah']) : ''; ?></th>
+            <!-- <th colspan="5"><?php echo isset($data[0]['jenis_tanah']) ? strtoupper($data[0]['jenis_tanah']) : ''; ?></th> -->
+        </tr>
+        <tr>
+            <th>Nomor Persil</th>
+            <th>Kelas Desa</th>
+            <th>Luas Milik</th>
+            <th>Jenis Tanah</th>
+            <th>Pajak Bumi</th>
+            <th>Keterangan Tanah</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Menampilkan data perubahan jika ada
+        if (isset($data) && count($data) > 0) {
+            foreach ($data as $row) {
+                // Mengubah format tanggal
+                
+                echo "<tr>";
+                echo "<td>" . strtoupper($row['no_persil']) . "</td>";
+                echo "<td>" . strtoupper($row['kelas_desa']) . "</td>";
+                echo "<td>" . strtoupper($row['luas_milik']) . "</td>";
+                echo "<td>" . strtoupper($row['jenis_tanah']) . "</td>";
+                echo "<td>" . 'Rp. ' . number_format($row['pajak_bumi'], 0, ',', '.') . "</td>";
+                echo "<td>" . strtoupper(isset($row['keterangan_tanah']) ? $row['keterangan_tanah'] : '') . "</td>";
+                echo "</tr>";
+            }
+        }
+        ?>
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <div class="garis"></div>
+            <!-- <th colspan="5"><?php echo isset($data[0]['jenis_tanah']) ? strtoupper($data[0]['jenis_tanah']) : ''; ?></th> -->
         </tr>
         <tr>
             <th>Nomor Persil/Blok</th>
