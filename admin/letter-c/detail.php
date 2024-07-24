@@ -22,8 +22,13 @@ if(isset($_GET['detail'])) {
     
     $result_detail = mysqli_query($connect, $query_detail);
 
-    if(mysqli_num_rows($result_detail) > 0) {
+    // Query untuk mengambil data tanah berdasarkan nomor persil
+    $query_tanah = "SELECT no_persil, kelas_desa, luas_milik, jenis_tanah, pajak_bumi, keterangan_tanah 
+                    FROM tanah 
+                    WHERE no_persil = '$no_persil'";
+    $result_tanah = mysqli_query($connect, $query_tanah);
 
+    if(mysqli_num_rows($result_detail) > 0) {
 ?>
 
 <aside class="main-sidebar">
@@ -129,13 +134,59 @@ if(isset($_GET['detail'])) {
 
     <section class="content">
         <div class="row">
+            <!-- Print Button -->
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Data Tanah: <?php echo $no_persil; ?></h3>
+                        <!-- Print Button -->
+                        <!-- <a href="cetak.php?nik=<?php echo $no_persil; ?>" class="btn btn-primary pull-right" target="_blank">Cetak</a> -->
+                    </div>
+
+                    <!-- Data from tanah table -->
+                    <div class="box-body">
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <thead>
+                                <tr>
+                                    <th>No Persil</th>
+                                    <th>Kelas Desa</th>
+                                    <th>Luas Milik</th>
+                                    <th>Jenis Tanah</th>
+                                    <th>Pajak Bumi</th>
+                                    <th>Keterangan Tanah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                if(mysqli_num_rows($result_tanah) > 0) {
+                                    while ($row_tanah = mysqli_fetch_assoc($result_tanah)) { 
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row_tanah['no_persil']; ?></td>
+                                        <td><?php echo $row_tanah['kelas_desa']; ?></td>
+                                        <td><?php echo $row_tanah['luas_milik']; ?></td>
+                                        <td><?php echo $row_tanah['jenis_tanah']; ?></td>
+                                        <td><?php echo $row_tanah['pajak_bumi']; ?></td>
+                                        <td><?php echo $row_tanah['keterangan_tanah']; ?></td>
+                                    </tr>
+                                <?php 
+                                    } 
+                                } else {
+                                    echo "<tr><td colspan='6'>Data tidak ditemukan untuk nomor persil tersebut.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Detail Pemilik dengan Nomor Persil: <?php echo $no_persil; ?></h3>
                     </div>
 
-                    
                     <table class="table table-bordered" style="margin-top: 20px;">
                         <thead>
                             <tr>
@@ -162,11 +213,9 @@ if(isset($_GET['detail'])) {
                     </table>
 
                     <form id="printForm" action="cetak.php" method="post" target="_blank" style="text-align: right; margin-top: 20px;">
-    <input type="hidden" name="no_persil" value="<?php echo $no_persil; ?>">
-    <button type="submit" class="btn btn-primary" id="btnCetak">Cetak</button>
-</form>
-
-
+                        <input type="hidden" name="no_persil" value="<?php echo $no_persil; ?>">
+                        <button type="submit" class="btn btn-primary" id="btnCetak">Cetak</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -186,7 +235,6 @@ if(isset($_GET['detail'])) {
 
 include ('../part/footer.php');
 ?>
-
 
 <script>
 document.getElementById("btnCetak").addEventListener("click", function() {
