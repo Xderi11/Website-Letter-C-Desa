@@ -62,9 +62,14 @@ if(isset($_GET['detail'])) {
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
             <li>
-              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
             </li>
           </ul>
+        </li>
+        <li>
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
         </li>
         <li class="active treeview">
             <a href="#">
@@ -74,11 +79,11 @@ if(isset($_GET['detail'])) {
               </span>
             </a>
             <ul class="treeview-menu">
-              <li>
-                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
-              </li>
               <li class="active">
                 <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
+              </li>
+              <li>
+                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
               </li>
             </ul>
         </li>
@@ -110,7 +115,7 @@ if(isset($_GET['detail'])) {
         ?>
       </ul>
     </section>
-  </aside>
+</aside>
 
 
 <div class="content-wrapper">

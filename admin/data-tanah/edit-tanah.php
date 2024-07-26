@@ -117,10 +117,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </a>
             <ul class="treeview-menu">
               <li>
-                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
               </li>
               <li>
-                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
+                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
               </li>
             </ul>
         </li>
@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ?>
       </ul>
     </section>
-  </aside>
+</aside>
 
 <div class="content-wrapper">
   <section class="content-header">

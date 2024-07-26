@@ -40,9 +40,14 @@
               <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
             </li>
             <li>
-              <a href="../penduduk/"><i class="fa fa-circle-notch"></i> Data Letter C</a>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
             </li>
           </ul>
+        </li>
+        <li>
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
         </li>
         <li class="treeview">
             <a href="#">
@@ -53,10 +58,10 @@
             </a>
             <ul class="treeview-menu">
               <li>
-                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
               </li>
               <li>
-                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
+                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
               </li>
             </ul>
         </li>
@@ -88,7 +93,7 @@
         ?>
       </ul>
     </section>
-  </aside>
+</aside>
 
 <div class="content-wrapper">
   <section class="content-header">

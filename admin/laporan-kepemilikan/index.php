@@ -81,14 +81,17 @@ mysqli_close($connect);
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
-                    </li>
-                    <li>
                         <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
                     </li>
+                    <li>
+                        <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a></li>
                 </ul>
             </li>
-            <li class="active treeview">
+            
+            <?php
+            if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
+            ?>
+            <li class=" active treeview">
                 <a href="#">
                     <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Laporan</span>
                     <span class="pull-right-container">
@@ -99,14 +102,16 @@ mysqli_close($connect);
                     <li class="active">
                         <a href="../laporan-kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
                     </li>
-                    <li>
-                        <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
-                    </li>
+                    <li >
+                        <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a></li>
                     <li>
                         <a href="../surat-keterangan/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
                     </li>
                 </ul>
             </li>
+            <?php 
+            }
+            ?>
         </ul>
     </section>
 </aside>

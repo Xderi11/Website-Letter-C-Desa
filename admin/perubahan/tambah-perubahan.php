@@ -110,91 +110,92 @@ if (isset($_POST['submit'])) {
 
 <aside class="main-sidebar">
     <section class="sidebar">
-        <div class="user-panel">
-            <div class="pull-left image">
-                <?php  
-                if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
-                    echo '<img src="../../assets/img/ava-admin-female.png" class="img-circle" alt="User Image">';
-                } else if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Kepala Desa')){
-                    echo '<img src="../../assets/img/ava-kades.png" class="img-circle" alt="User Image">';
-                }
-                ?>
-            </div>
-            <div class="pull-left info">
-                <p><?php echo $_SESSION['lvl']; ?></p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div>
-        <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">MAIN NAVIGATION</li>
-            <li>
-                <a href="../dashboard/">
-                    <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
-                </a>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
-                    </li>
-                    <li>
-                        <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="../penduduk/">
-                    <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
-                </a>
-            </li>
-            <li class="active treeview">
-                <a href="#">
-                    <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li >
-                        <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
-                    </li>
-                    <li class="active">
-                        <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
-                    </li>
-                </ul>
-            </li>
-            <?php
+      <div class="user-panel">
+        <div class="pull-left image">
+          <?php  
             if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
-            ?>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Laporan</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li>
-                        <a href="../laporan-kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
-                    </li>
-                    <li>
-                        <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
-                    </li>
-                    <li>
-                        <a href="../surat-keterangan/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
-                    </li>
-                </ul>
-            </li>
-            <?php 
+              echo '<img src="../../assets/img/ava-admin-female.png" class="img-circle" alt="User Image">';
+            } else if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Kepala Desa')){
+              echo '<img src="../../assets/img/ava-kades.png" class="img-circle" alt="User Image">';
             }
-            ?>
-        </ul>
+          ?>
+        </div>
+        <div class="pull-left info">
+          <p><?php echo $_SESSION['lvl']; ?></p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li>
+          <a href="../dashboard/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Dashboard</span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fas fa-database"></i> <span>&nbsp;&nbsp;Data Master</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="../data-tanah/"><i class="fa fa-circle-notch"></i> Data Tanah</a>
+            </li>
+            <li>
+              <a href="../data-pemilik/"><i class="fa fa-circle-notch"></i> Data Pemilik</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="../penduduk/">
+            <i class="fas fa-tachometer-alt"></i> <span>&nbsp;&nbsp;Data Letter C</span>
+          </a>
+        </li>
+        <li class="active treeview">
+            <a href="#">
+              <i class="fas fa-exchange-alt"></i> <span>Transaksi</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="active">
+                <a href="../perubahan/"><i class="fa fa-circle-notch"></i> Perubahan</a>
+              </li>
+              <li>
+                <a href="../kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+              </li>
+            </ul>
+        </li>
+          
+        <?php
+          if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
+        ?>
+        <li class="treeview">
+          <a href="#">
+            <i class="fas fa-envelope-open-text"></i> <span>&nbsp;&nbsp;Laporan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="../laporan-kepemilikan/"><i class="fa fa-circle-notch"></i> Kepemilikan</a>
+            </li>
+            <li>
+              <a href="../letter-c/"><i class="fa fa-circle-notch"></i> Letter C</a>
+            </li>
+            <li>
+              <a href="../surat-keterangan/"><i class="fa fa-circle-notch"></i> Surat Keterangan</a>
+            </li>
+          </ul>
+        </li>
+        <?php 
+          }
+        ?>
+      </ul>
     </section>
 </aside>
 
