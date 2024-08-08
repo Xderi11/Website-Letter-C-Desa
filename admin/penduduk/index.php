@@ -172,7 +172,6 @@ if (mysqli_num_rows($result) > 0) {
     // Aksi admin jika sesuai level
     if(isset($_SESSION['lvl']) && ($_SESSION['lvl'] == 'Administrator')){
       echo "<td>";
-      echo "<a class='btn btn-success btn-sm' href='edit-penduduk.php?id=" . $row['id_kepemilikan'] . "'><i class='fa fa-edit'></i></a>";
       echo "<a class='btn btn-danger btn-sm' href='hapus-penduduk.php?id=" . $row['id_kepemilikan'] . "' onclick=\"return confirm('Apakah Anda yakin ingin menghapus data ini?')\"><i class='fa fa-trash'></i></a>";
       echo "</td>";
     }
