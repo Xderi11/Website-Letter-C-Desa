@@ -121,12 +121,13 @@
               <form class="form-horizontal" method="post" action="simpan-data-pemilik.php">
                 <div class="col-md-6">
                   <div class="box-body">
-                    <div class="form-group">
-                      <label class="col-sm-4 control-label">NIK</label>
-                      <div class="col-sm-8">
-                        <input type="text" name="fnik" class="form-control" pattern="\d*" title="Hanya angka yang diperbolehkan" placeholder="NIK" required>
-                      </div>
-                    </div>
+                  <div class="form-group">
+  <label class="col-sm-4 control-label">NIK</label>
+  <div class="col-sm-8">
+    <input type="text" name="fnik" class="form-control" pattern="\d{16}" title="NIK harus berupa 16 angka" placeholder="NIK" maxlength="16" required>
+  </div>
+</div>
+
                     <div class="form-group">
                       <label class="col-sm-4 control-label">Nama Lengkap</label>
                       <div class="col-sm-8">
