@@ -133,9 +133,9 @@ if (isset($_GET['id'])) {
                 <div class="col-md-6">
                   <div class="box-body">
                     <div class="form-group">
-                      <label class="col-sm-4 control-label">Nik</label>
+                      <label class="col-sm-4 control-label">NIK</label>
                       <div class="col-sm-8">
-                        <input type="text" name="fnik" class="form-control" pattern="\d*" title="Hanya angka yang diperbolehkan" value="<?php echo $data['nik']; ?>" required>
+                        <input type="text" name="fnik" class="form-control" pattern="\d{16}" title="NIK harus berupa 16 angka" value="<?php echo $data['nik']; ?>" maxlength="16" required>
                       </div>
                     </div>
                     <div class="form-group">
